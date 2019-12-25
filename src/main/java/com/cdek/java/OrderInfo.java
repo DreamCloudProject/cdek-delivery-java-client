@@ -1,5 +1,5 @@
 package com.cdek.java;
 
-public class SomeClass {
+public class OrderInfo {
 
 }
