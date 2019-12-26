@@ -1,4 +1,6 @@
-#Java SDK для СДЭК
+##Java SDK для СДЭК [![stability][https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square]][https://nodejs.org/api/documentation.html#documentation_stability_index]
+
+[![java version][https://img.shields.io/badge/java-11-blue]]
 
 ## Официальная документация 
 Ссылка на официальную документацию к Cdek-API в [confluence](https://confluence.cdek.ru/pages/viewpage.action?pageId=29923741)
