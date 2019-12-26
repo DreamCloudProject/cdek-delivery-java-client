@@ -14,10 +14,16 @@ import com.cdek.java.model.order.response.OrderResponse;
 import com.cdek.java.model.region.request.RegionRequest;
 import com.cdek.java.model.region.response.RegionResponse;
 import com.cdek.java.service.validation.ValidationService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Objects;
 import java.util.UUID;
+import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -32,12 +38,70 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
   private final ValidationService validationService;
   private final CdekAuthService cdekAuthService;
   private final OkHttpClient webClient;
+  private final ObjectMapper objectMapper;
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public OrderResponse orderRegistration(OrderRequest orderRequest) {
+  @SneakyThrows
+  public OrderResponse orderRegistration(@NotNull OrderRequest orderRequest) {
+    Objects.requireNonNull(orderRequest);
+    validationService.validateOrder(orderRequest);
+    var json = objectMapper.writeValueAsBytes(orderRequest);
+    var requestBody = RequestBody.create(json);
+    var request = new Request.Builder()
+        .url(baseUrl + ordersUrl)
+        .header(AUTH_HEADER, cdekAuthService.getFreshJWT())
+        .post(requestBody)
+        .build();
+    var response = webClient.newCall(request).execute();
+    var responseBody = response.body();
+    Objects.requireNonNull(responseBody);
+    return objectMapper.readValue(responseBody.string(), OrderResponse.class);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @SneakyThrows
+  public OrderResponse getOrderInfo(@NotNull UUID uuid) {
+    Objects.requireNonNull(uuid);
+    var request = new Request.Builder()
+        .url(baseUrl + ordersUrl + "/" + uuid)
+        .addHeader(AUTH_HEADER, cdekAuthService.getFreshJWT())
+        .build();
+    var response = webClient.newCall(request).execute();
+    var responseBody = response.body();
+    Objects.requireNonNull(responseBody);
+    return objectMapper.readValue(responseBody.string(), OrderResponse.class);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @SneakyThrows
+  public OrderResponse deleteOrder(@NotNull UUID uuid) {
+    Objects.requireNonNull(uuid);
+    var request = new Request.Builder()
+        .url(baseUrl + ordersUrl + "/" + uuid)
+        .addHeader(AUTH_HEADER, cdekAuthService.getFreshJWT())
+        .delete()
+        .build();
+    var response = webClient.newCall(request).execute();
+    var responseBody = response.body();
+    Objects.requireNonNull(responseBody);
+    return objectMapper.readValue(responseBody.string(), OrderResponse.class);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public CourierResponse createCourierDeliveryRequest(@NotNull CourierRequest courierRequest) {
+    Objects.requireNonNull(courierRequest);
     return null;
   }
 
@@ -45,7 +109,8 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
    * {@inheritDoc}
    */
   @Override
-  public OrderResponse getOrderInfo(UUID uuid) {
+  public CourierResponse getCourierRequestInfo(@NotNull UUID uuid) {
+    Objects.requireNonNull(uuid);
     return null;
   }
 
@@ -53,7 +118,8 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
    * {@inheritDoc}
    */
   @Override
-  public OrderResponse deleteOrder(UUID uuid) {
+  public CourierResponse deleteCourierRequest(@NotNull UUID uuid) {
+    Objects.requireNonNull(uuid);
     return null;
   }
 
@@ -61,7 +127,8 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
    * {@inheritDoc}
    */
   @Override
-  public CourierResponse createCourierDeliveryRequest(CourierRequest courierRequest) {
+  public InvoiceResponse formOrderInvoice(@NotNull InvoiceRequest invoiceRequest) {
+    Objects.requireNonNull(invoiceRequest);
     return null;
   }
 
@@ -69,7 +136,8 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
    * {@inheritDoc}
    */
   @Override
-  public CourierResponse getCourierRequestInfo(UUID uuid) {
+  public InvoiceResponse getInvoiceForOrder(@NotNull UUID uuid) {
+    Objects.requireNonNull(uuid);
     return null;
   }
 
@@ -77,7 +145,8 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
    * {@inheritDoc}
    */
   @Override
-  public CourierResponse deleteCourierRequest(UUID uuid) {
+  public BarcodeResponse formBarcodePlaceForOrder(@NotNull BarcodeRequest barcodeRequest) {
+    Objects.requireNonNull(barcodeRequest);
     return null;
   }
 
@@ -85,7 +154,8 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
    * {@inheritDoc}
    */
   @Override
-  public InvoiceResponse formOrderInvoice(InvoiceRequest invoiceRequest) {
+  public BarcodeResponse getBarcodePlaceForOrder(@NotNull UUID uuid) {
+    Objects.requireNonNull(uuid);
     return null;
   }
 
@@ -93,7 +163,8 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
    * {@inheritDoc}
    */
   @Override
-  public InvoiceResponse getInvoiceForOrder(UUID uuid) {
+  public RegionResponse getRegionsList(@NotNull RegionRequest regionRequest) {
+    Objects.requireNonNull(regionRequest);
     return null;
   }
 
@@ -101,31 +172,8 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
    * {@inheritDoc}
    */
   @Override
-  public BarcodeResponse formBarcodePlaceForOrder(BarcodeRequest barcodeRequest) {
-    return null;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public BarcodeResponse getBarcodePlaceForOrder(UUID uuid) {
-    return null;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public RegionResponse getRegionsList(RegionRequest regionRequest) {
-    return null;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public CityResponse getCitiesList(CityRequest cityRequest) {
+  public CityResponse getCitiesList(@NotNull CityRequest cityRequest) {
+    Objects.requireNonNull(cityRequest);
     return null;
   }
 }
