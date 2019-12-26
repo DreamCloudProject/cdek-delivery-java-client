@@ -1,4 +1,4 @@
-package com.cdek.java.model.request;
+package com.cdek.java.model.order.request;
 
 import javax.validation.constraints.Size;
 import lombok.Getter;

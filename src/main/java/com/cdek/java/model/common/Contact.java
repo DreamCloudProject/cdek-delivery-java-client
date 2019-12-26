@@ -1,9 +1,8 @@
-package com.cdek.java.model.request;
+package com.cdek.java.model.common;
 
 import com.cdek.java.commons.Pattern;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;

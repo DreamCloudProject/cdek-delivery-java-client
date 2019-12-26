@@ -1,4 +1,4 @@
-package com.cdek.java.model.request;
+package com.cdek.java.model.common;
 
 import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;

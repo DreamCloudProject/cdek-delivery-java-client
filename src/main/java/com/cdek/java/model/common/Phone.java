@@ -1,4 +1,4 @@
-package com.cdek.java.model.request;
+package com.cdek.java.model.common;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

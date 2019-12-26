@@ -1,8 +1,9 @@
 package com.cdek.java.client;
 
 import com.cdek.java.model.OrderInfo;
-import com.cdek.java.model.request.OrderRequest;
+import com.cdek.java.model.order.request.OrderRequest;
 import java.util.UUID;
+import reactor.core.publisher.Mono;
 
 public interface CdekClient {
 
@@ -14,21 +15,21 @@ public interface CdekClient {
    * ответа будет возвращено описание ошибки в формате error и HTTP-статус будет установлен в
    * соответствии с состоянием ошибки.
    */
-  OrderInfo orderRegistration(OrderRequest orderRequest);
+  Mono<OrderInfo> orderRegistration(OrderRequest orderRequest);
 
   /**
    * Запрос на получение информации о заказе
    * @param uuid - идентификатор заказа в ИС СДЭК, по которому необходима информация
    * @return объект с информацией по заказу
    */
-  OrderInfo getOrderInfo(UUID uuid);
+  Mono<OrderInfo> getOrderInfo(UUID uuid);
 
   /**
    * Запрос на удаление заказа
    * @param uuid - идентификатор заказа в ИС СДЭК, который необходимо удалить
    * @return объект с информацией по удаленному заказу
    */
-  OrderInfo deleteOrder(UUID uuid);
+  Mono<OrderInfo> deleteOrder(UUID uuid);
 
   void createCourierDeliveryRequest();
 

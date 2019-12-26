@@ -1,6 +1,7 @@
-package com.cdek.java.model.request;
+package com.cdek.java.model.order.request;
 
 import com.cdek.java.model.Country;
+import com.cdek.java.model.common.Money;
 import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

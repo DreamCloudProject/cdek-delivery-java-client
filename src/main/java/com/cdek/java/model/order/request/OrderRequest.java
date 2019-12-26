@@ -1,8 +1,13 @@
-package com.cdek.java.model.request;
+package com.cdek.java.model.order.request;
 
 import com.cdek.java.commons.Pattern;
 import com.cdek.java.model.OrderTariff;
 import com.cdek.java.model.OrderType;
+import com.cdek.java.model.common.Contact;
+import com.cdek.java.model.common.Location;
+import com.cdek.java.model.common.Money;
+import com.cdek.java.model.common.Service;
+import com.cdek.java.model.common.Threshold;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
