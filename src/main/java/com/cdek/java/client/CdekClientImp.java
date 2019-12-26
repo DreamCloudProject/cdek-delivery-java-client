@@ -2,13 +2,18 @@ package com.cdek.java.client;
 
 import com.cdek.java.model.OrderInfo;
 import com.cdek.java.model.request.OrderRequest;
+import com.cdek.java.service.validation.ValidationService;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CdekClientImp implements CdekClient {
+
+  private final ValidationService validationService;
 
   @Value("${url}")
   private String url;

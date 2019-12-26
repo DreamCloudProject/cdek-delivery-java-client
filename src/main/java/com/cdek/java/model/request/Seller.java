@@ -4,6 +4,9 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Данные истинного продавца.
+ */
 @Getter
 @Setter
 public class Seller {

@@ -1,5 +1,7 @@
 package com.cdek.java.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Country {
 
   RUSSIA("00");
@@ -13,6 +15,7 @@ public enum Country {
     this.code = code;
   }
 
+  @JsonValue
   public String getCode() {
     return code;
   }

@@ -1,10 +1,12 @@
 package com.cdek.java.model.request;
 
+import com.cdek.java.commons.Pattern;
 import com.cdek.java.model.OrderTariff;
 import com.cdek.java.model.OrderType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
@@ -40,7 +42,8 @@ public class OrderRequest {
   /**
    * Дата инвойса. Только для заказов "интернет-магазин"
    */
-  private LocalDate dateInvoice;
+  @JsonFormat(pattern = Pattern.DATE)
+  private Instant dateInvoice;
 
   @Size(max = 255)
   private String shipperName;

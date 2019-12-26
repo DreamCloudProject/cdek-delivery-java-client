@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Стоимость услуги/товара с учетом налогообложения
+ */
 @Getter
 @Setter
 public class Money {
