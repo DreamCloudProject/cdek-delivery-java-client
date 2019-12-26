@@ -1,6 +1,6 @@
 # Java SDK для СДЭК [![stability][0]][1]
 
-[![java version][2]][3]
+[![java version][2]][3] [![Spring Boot][4]][5]
 
 ## Официальная документация 
 Ссылка на официальную документацию к Cdek-API в [confluence](https://confluence.cdek.ru/pages/viewpage.action?pageId=29923741)
@@ -66,3 +66,5 @@ client:
 [1]: https://nodejs.org/api/documentation.html#documentation_stability_index
 [2]: https://img.shields.io/badge/java-11-blue
 [3]: https://openjdk.java.net/projects/jdk/11/
+[4]: https://img.shields.io/badge/Spring%20Boot-2.2.2.RELEASE-green
+[5]: https://docs.spring.io/spring-boot/docs/2.2.2.RELEASE/reference/html/
