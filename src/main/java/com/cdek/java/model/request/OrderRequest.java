@@ -1,8 +1,8 @@
 package com.cdek.java.model.request;
 
-import com.cdek.java.Country;
 import com.cdek.java.OrderTariff;
 import com.cdek.java.OrderType;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
@@ -30,8 +30,21 @@ public class OrderRequest {
   @Size(max = 255)
   private String deliveryPoint;
 
-  private Country countryCode;
+  private String itemsCostCurrency;
 
+  private String recipientCurrency;
+
+  /**
+   * Дата инвойса. Только для заказов "интернет-магазин"
+   */
+  private LocalDate dateInvoice;
+  private String shipperName;
+  private String shipperAddress;
+  private Money deliveryRecipientCost;
+  private List<Threshold> deliveryRecipientCostAdv;
+  private Contact sender;
+  private Seller seller;
+  private Contact recipient;
   private Location fromLocation;
   private Location toLocaton;
   private List<Service> services;

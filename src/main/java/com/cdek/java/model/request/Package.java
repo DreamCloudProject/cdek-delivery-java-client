@@ -14,6 +14,10 @@ public class Package {
   private Integer width;
   private Integer height;
   private String comment;
+
+  /**
+   * Позиции товаров в упаковке. Только для заказов "интернет-магазин"
+   */
   private List<Item> items;
 
 }
