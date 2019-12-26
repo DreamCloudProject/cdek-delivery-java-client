@@ -1,6 +1,5 @@
 package com.cdek.java.model.auth.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

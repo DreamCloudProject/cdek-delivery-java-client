@@ -2,6 +2,8 @@ package com.cdek.java.model.common;
 
 import com.cdek.java.commons.Pattern;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.time.Instant;
 import java.util.List;
 import javax.validation.constraints.Email;
@@ -14,6 +16,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Contact {
 
   @Size(max = 255)

@@ -30,16 +30,17 @@ public class CdekClientImp implements CdekClient {
 
   @Override
   public Mono<OrderInfo> orderRegistration(OrderRequest orderRequest) {
-//    return Mono.just(orderRequest)
-//        .flatMap(order -> {
-//          validationService.validateOrder(order);
-//          return webClient
-//              .post()
-//              .uri(ordersUrl)
-//              .header(AUTH_HEADER, cdekAuthService.getFreshJWT())
-//
-//        });
-    return null;
+    return Mono.just(orderRequest)
+        .flatMap(order -> {
+          validationService.validateOrder(order);
+          return webClient
+              .post()
+              .uri(ordersUrl)
+              .header(AUTH_HEADER, cdekAuthService.getFreshJWT())
+              .body(Mono.just(order), OrderRequest.class)
+              .retrieve()
+              .bodyToMono(OrderInfo.class);
+        });
   }
 
   @Override

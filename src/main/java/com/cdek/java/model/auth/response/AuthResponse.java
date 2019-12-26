@@ -24,7 +24,7 @@ public class AuthResponse {
    */
   private Integer expiresIn;
 
-  private Instant received;
+  private Instant received = Instant.now();
 
   /**
    * Область действия токена (доступ к объектам и операциям над ними)

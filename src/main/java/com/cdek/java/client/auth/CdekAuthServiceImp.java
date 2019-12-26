@@ -35,10 +35,12 @@ public class CdekAuthServiceImp implements CdekAuthService {
   public Mono<AuthResponse> authorize(AuthRequest authRequest) {
     return webClient
         .post()
-        .uri(authUrl)
-        .attribute("grant_type", authRequest.getGrantType().name().toLowerCase())
-        .attribute("client_id", authRequest.getClientId())
-        .attribute("client_secret", authRequest.getClientSecret())
+        .uri(uriBuilder ->
+            uriBuilder.path(authUrl)
+                .queryParam("grant_type", authRequest.getGrantType().name().toLowerCase())
+                .queryParam("client_id", authRequest.getClientId())
+                .queryParam("client_secret", authRequest.getClientSecret())
+                .build())
         .retrieve()
         .bodyToMono(AuthResponse.class);
   }
