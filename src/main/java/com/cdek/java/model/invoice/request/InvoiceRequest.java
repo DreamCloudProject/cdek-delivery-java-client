@@ -1,7 +1,6 @@
-package com.cdek.java.model.invoice;
+package com.cdek.java.model.invoice.request;
 
 import java.util.List;
-import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;

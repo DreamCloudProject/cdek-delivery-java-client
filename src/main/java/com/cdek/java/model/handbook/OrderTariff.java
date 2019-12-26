@@ -1,4 +1,4 @@
-package com.cdek.java.model.common;
+package com.cdek.java.model.handbook;
 
 public enum OrderTariff {
 

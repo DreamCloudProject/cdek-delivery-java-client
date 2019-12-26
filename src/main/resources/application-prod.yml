@@ -1,1 +1,2 @@
-url: 'https://api.cdek.ru'
+cdek:
+  base.url: 'https://api.cdek.ru'

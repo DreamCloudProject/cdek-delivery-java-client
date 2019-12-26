@@ -8,8 +8,8 @@ import com.cdek.java.model.city.request.CityRequest;
 import com.cdek.java.model.city.response.CityResponse;
 import com.cdek.java.model.courier.request.CourierRequest;
 import com.cdek.java.model.courier.response.CourierResponse;
-import com.cdek.java.model.invoice.InvoiceRequest;
-import com.cdek.java.model.invoice.InvoiceResponse;
+import com.cdek.java.model.invoice.request.InvoiceRequest;
+import com.cdek.java.model.invoice.response.InvoiceResponse;
 import com.cdek.java.model.order.request.OrderRequest;
 import com.cdek.java.model.order.response.OrderResponse;
 import com.cdek.java.model.region.request.RegionRequest;
@@ -31,6 +31,9 @@ public class ReactiveCdekClientImp extends AbstractCdekClient implements Reactiv
   private final CdekAuthService cdekAuthService;
   private final WebClient reactiveWebClient;
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Mono<OrderResponse> orderRegistration(OrderRequest orderRequest) {
     return Mono.just(orderRequest)
@@ -46,6 +49,9 @@ public class ReactiveCdekClientImp extends AbstractCdekClient implements Reactiv
         });
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Mono<OrderResponse> getOrderInfo(UUID uuid) {
     return reactiveWebClient
@@ -56,6 +62,9 @@ public class ReactiveCdekClientImp extends AbstractCdekClient implements Reactiv
         .bodyToMono(OrderResponse.class);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Mono<OrderResponse> deleteOrder(UUID uuid) {
     return reactiveWebClient
@@ -66,47 +75,73 @@ public class ReactiveCdekClientImp extends AbstractCdekClient implements Reactiv
         .bodyToMono(OrderResponse.class);
   }
 
-
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Mono<CourierResponse> createCourierDeliveryRequest(CourierRequest courierRequest) {
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Mono<CourierResponse> getCourierRequestInfo(UUID uuid) {
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Mono<CourierResponse> deleteCourierRequest(UUID uuid) {
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Mono<InvoiceResponse> formOrderInvoice(InvoiceRequest invoiceRequest) {
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Mono<InvoiceResponse> getInvoiceForOrder(UUID uuid) {
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Mono<BarcodeResponse> formBarcodePlaceForOrder(BarcodeRequest barcodeRequest) {
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Mono<BarcodeResponse> getBarcodePlaceForOrder(UUID uuid) {
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Mono<RegionResponse> getRegionsList(RegionRequest regionRequest) {
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Mono<CityResponse> getCitiesList(CityRequest cityRequest) {
     return null;

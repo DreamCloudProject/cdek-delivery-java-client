@@ -1,5 +1,6 @@
 package com.cdek.java.config;
 
+import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,7 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @ComponentScan({ "com.cdek.java" })
 public class CdekClientConfiguration {
 
-  @Value("${url}")
+  @Value("${cdek.base.url}")
   private String baseUrl;
 
   @Bean
@@ -21,5 +22,10 @@ public class CdekClientConfiguration {
         .baseUrl(baseUrl)
         .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .build();
+  }
+
+  @Bean
+  public OkHttpClient webClient() {
+    return new OkHttpClient();
   }
 }

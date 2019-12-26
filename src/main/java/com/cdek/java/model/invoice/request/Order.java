@@ -1,4 +1,4 @@
-package com.cdek.java.model.invoice;
+package com.cdek.java.model.invoice.request;
 
 import java.util.UUID;
 import lombok.Getter;
