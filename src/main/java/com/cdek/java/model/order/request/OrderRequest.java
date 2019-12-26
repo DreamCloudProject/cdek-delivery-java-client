@@ -1,8 +1,8 @@
 package com.cdek.java.model.order.request;
 
 import com.cdek.java.commons.Pattern;
-import com.cdek.java.model.OrderTariff;
-import com.cdek.java.model.OrderType;
+import com.cdek.java.model.common.OrderTariff;
+import com.cdek.java.model.common.OrderType;
 import com.cdek.java.model.common.Contact;
 import com.cdek.java.model.common.Location;
 import com.cdek.java.model.common.Money;

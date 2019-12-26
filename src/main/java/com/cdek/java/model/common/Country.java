@@ -1,4 +1,4 @@
-package com.cdek.java.model;
+package com.cdek.java.model.common;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

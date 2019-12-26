@@ -1,4 +1,4 @@
-package com.cdek.java.model;
+package com.cdek.java.model.common.response;
 
 import com.cdek.java.commons.Pattern;
 import com.fasterxml.jackson.annotation.JsonFormat;

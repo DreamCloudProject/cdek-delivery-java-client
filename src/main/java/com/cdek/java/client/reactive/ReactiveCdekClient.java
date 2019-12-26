@@ -1,4 +1,4 @@
-package com.cdek.java.client;
+package com.cdek.java.client.reactive;
 
 import com.cdek.java.model.barcode.request.BarcodeRequest;
 import com.cdek.java.model.barcode.response.BarcodeResponse;
@@ -13,8 +13,9 @@ import com.cdek.java.model.order.response.OrderResponse;
 import com.cdek.java.model.region.request.RegionRequest;
 import com.cdek.java.model.region.response.RegionResponse;
 import java.util.UUID;
+import reactor.core.publisher.Mono;
 
-public interface CdekClient {
+public interface ReactiveCdekClient {
 
   /**
    * Запрос на регистрацию заказа
@@ -24,35 +25,35 @@ public interface CdekClient {
    * ответа будет возвращено описание ошибки в формате error и HTTP-статус будет установлен в
    * соответствии с состоянием ошибки.
    */
-  OrderResponse orderRegistration(OrderRequest orderRequest);
+  Mono<OrderResponse> orderRegistration(OrderRequest orderRequest);
 
   /**
    * Запрос на получение информации о заказе
    * @param uuid - идентификатор заказа в ИС СДЭК, по которому необходима информация
    * @return объект с информацией по заказу
    */
-  OrderResponse getOrderInfo(UUID uuid);
+  Mono<OrderResponse> getOrderInfo(UUID uuid);
 
   /**
    * Запрос на удаление заказа
    * @param uuid - идентификатор заказа в ИС СДЭК, который необходимо удалить
    * @return объект с информацией по удаленному заказу
    */
-  OrderResponse deleteOrder(UUID uuid);
+  Mono<OrderResponse> deleteOrder(UUID uuid);
 
-  CourierResponse createCourierDeliveryRequest(CourierRequest courierRequest);
+  Mono<CourierResponse> createCourierDeliveryRequest(CourierRequest courierRequest);
 
-  CourierResponse getCourierRequestInfo(UUID uuid);
+  Mono<CourierResponse> getCourierRequestInfo(UUID uuid);
 
-  CourierResponse deleteCourierRequest(UUID uuid);
+  Mono<CourierResponse> deleteCourierRequest(UUID uuid);
 
-  InvoiceResponse formOrderInvoice(InvoiceRequest invoiceRequest);
+  Mono<InvoiceResponse> formOrderInvoice(InvoiceRequest invoiceRequest);
 
-  InvoiceResponse getInvoiceForOrder(UUID uuid);
+  Mono<InvoiceResponse> getInvoiceForOrder(UUID uuid);
 
-  BarcodeResponse formBarcodePlaceForOrder(BarcodeRequest barcodeRequest);
+  Mono<BarcodeResponse> formBarcodePlaceForOrder(BarcodeRequest barcodeRequest);
 
-  BarcodeResponse getBarcodePlaceForOrder(UUID uuid);
+  Mono<BarcodeResponse> getBarcodePlaceForOrder(UUID uuid);
 
   /**
    * Список регионов.
@@ -61,7 +62,7 @@ public interface CdekClient {
    * @param regionRequest - объект, содержащий
    * @return
    */
-  RegionResponse getRegionsList(RegionRequest regionRequest);
+  Mono<RegionResponse> getRegionsList(RegionRequest regionRequest);
 
   /**
    * Список населенных пунктов.
@@ -69,6 +70,6 @@ public interface CdekClient {
    * Список населенных пунктов может быть ограничен характеристиками, задаваемыми пользователем.
    * @param cityRequest - объект содержащий информацию о запрашиваемых населенных пунктах.
    */
-  CityResponse getCitiesList(CityRequest cityRequest);
+  Mono<CityResponse> getCitiesList(CityRequest cityRequest);
 
 }

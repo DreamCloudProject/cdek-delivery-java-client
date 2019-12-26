@@ -16,7 +16,7 @@ public class CdekClientConfiguration {
   private String baseUrl;
 
   @Bean
-  public WebClient webClient() {
+  public WebClient reactiveWebClient() {
     return WebClient.builder()
         .baseUrl(baseUrl)
         .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)

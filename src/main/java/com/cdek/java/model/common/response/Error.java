@@ -1,4 +1,4 @@
-package com.cdek.java.model.response;
+package com.cdek.java.model.common.response;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
