@@ -1,6 +1,6 @@
-##Java SDK для СДЭК [![stability][https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square]][https://nodejs.org/api/documentation.html#documentation_stability_index]
+# Java SDK для СДЭК [![stability][0]][1]
 
-[![java version][https://img.shields.io/badge/java-11-blue]]
+[![java version][2]][3]
 
 ## Официальная документация 
 Ссылка на официальную документацию к Cdek-API в [confluence](https://confluence.cdek.ru/pages/viewpage.action?pageId=29923741)
@@ -61,3 +61,8 @@ client:
 ### Включение тестового режима
 
 Как известно из официельной документации 
+
+[0]: https://img.shields.io/badge/stability-experemental-orange
+[1]: https://nodejs.org/api/documentation.html#documentation_stability_index
+[2]: https://img.shields.io/badge/java-11-blue
+[3]: https://openjdk.java.net/projects/jdk/11/
