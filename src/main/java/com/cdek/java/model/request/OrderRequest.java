@@ -1,7 +1,9 @@
 package com.cdek.java.model.request;
 
-import com.cdek.java.OrderTariff;
-import com.cdek.java.OrderType;
+import com.cdek.java.model.OrderTariff;
+import com.cdek.java.model.OrderType;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +14,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class OrderRequest {
 
   private OrderType type;
@@ -38,7 +41,11 @@ public class OrderRequest {
    * Дата инвойса. Только для заказов "интернет-магазин"
    */
   private LocalDate dateInvoice;
+
+  @Size(max = 255)
   private String shipperName;
+
+  @Size(max = 255)
   private String shipperAddress;
   private Money deliveryRecipientCost;
   private List<Threshold> deliveryRecipientCostAdv;

@@ -1,5 +1,6 @@
-package com.cdek.java;
+package com.cdek.java.client;
 
+import com.cdek.java.model.OrderInfo;
 import com.cdek.java.model.request.OrderRequest;
 import java.util.UUID;
 

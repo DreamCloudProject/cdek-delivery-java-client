@@ -1,5 +1,6 @@
 package com.cdek.java.model.request;
 
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +8,9 @@ import lombok.Setter;
 @Setter
 public class Phone {
 
+  @Size(max = 255)
   private String number;
+  @Size(max = 255)
   private String additional;
 
 }

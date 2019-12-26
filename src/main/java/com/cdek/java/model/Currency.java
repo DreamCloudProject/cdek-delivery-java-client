@@ -1,4 +1,4 @@
-package com.cdek.java;
+package com.cdek.java.model;
 
 public enum Currency {
 
