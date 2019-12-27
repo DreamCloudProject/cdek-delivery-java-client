@@ -200,10 +200,10 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
           .constructCollectionType(List.class, responseEntityClass);
       return objectMapper.readValue(responseBody.string(), listMapper);
     } catch (JsonProcessingException ex) {
-      log.info(ex.getMessage(), ex);
+      log.error(ex.getMessage(), ex);
       throw new CdekProxyException(ex.getMessage(), ex);
     } catch (IOException ex) {
-      log.info(ex.getMessage(), ex);
+      log.error(ex.getMessage(), ex);
       throw new CdekException(ex.getMessage(), ex);
     }
   }
