@@ -1,6 +1,6 @@
 package com.cdek.java.client;
 
-import com.cdek.java.client.auth.CdekAuthService;
+import com.cdek.java.client.auth.service.CdekAuthService;
 import com.cdek.java.exception.CdekProxyException;
 import com.cdek.java.model.barcode.request.BarcodeRequest;
 import com.cdek.java.model.barcode.response.BarcodeResponse;
@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,20 +28,31 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class CdekClientImp extends AbstractCdekClient implements CdekClient {
 
-  @Value("${cdek.base.url}")
+  @Value("${cdek.base.url:https://api.edu.cdek.ru}")
   private String baseUrl;
+
+  @PostConstruct
+  public void init() {
+    System.out.println("AJDKLJASKLDJKLASDKLSAD" + baseUrl);
+  }
 
   private final ValidationService validationService;
   private final CdekAuthService cdekAuthService;
   private final OkHttpClient webClient;
+  private final RestTemplate restTemplate;
   private final ObjectMapper objectMapper;
 
   /**
@@ -190,23 +202,30 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
   }
 
   private <T> List<T> getList(String url, Object requestEntity, Class<T> responseEntityClass) {
-    try {
-      var json = objectMapper.writeValueAsBytes(requestEntity);
-      var requestBody = RequestBody.create(json);
-      var request = new Request.Builder()
-          .url(url)
-          .method("GET", requestBody)
-          .build();
-      var response = webClient.newCall(request).execute();
-      var responseBody = response.body();
-      Objects.requireNonNull(responseBody);
-      var listMapper = objectMapper
-          .getTypeFactory()
-          .constructCollectionType(List.class, responseEntityClass);
-      return objectMapper.readValue(responseBody.string(), listMapper);
-    } catch (IOException ex) {
-      log.error(ex.getMessage(), ex);
-      throw new CdekProxyException(ex.getMessage(), ex);
-    }
+//    try {
+//      var json = objectMapper.writeValueAsBytes(requestEntity);
+//      var requestBody = RequestBody.create(json);
+//      var request = new Request.Builder()
+//          .url(url)
+//          .header("Authorization", cdekAuthService.getFreshJWT())
+//          .method("POST", requestBody)
+//          .build();
+//      var response = webClient.newCall(request).execute();
+//      var responseBody = response.body();
+//      Objects.requireNonNull(responseBody);
+//      var listMapper = objectMapper
+//          .getTypeFactory()
+//          .constructCollectionType(List.class, responseEntityClass);
+//      return objectMapper.readValue(responseBody.string(), listMapper);
+//    } catch (IOException ex) {
+//      log.error(ex.getMessage(), ex);
+//      throw new CdekProxyException(ex.getMessage(), ex);
+//    }
+
+//    var httpHeaders = new HttpHeaders();
+//    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+//    httpHeaders.set(AUTH_HEADER, cdekAuthService.getFreshJWT());
+//    var httpEntity = new HttpEntity<>(requestEntity, httpHeaders);
+//    restTemplate.exchange(url, HttpMethod.GET, httpEntity, httpEntity, )
   }
 }

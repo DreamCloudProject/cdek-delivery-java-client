@@ -1,4 +1,4 @@
-package com.cdek.java.client.auth;
+package com.cdek.java.client.auth.service;
 
 import com.cdek.java.commons.Api;
 import com.cdek.java.model.auth.request.AuthRequest;
@@ -18,9 +18,9 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class CdekAuthServiceImp implements CdekAuthService {
 
-  @Value("${client.id}")
+  @Value("${client.id:z9GRRu7FxmO53CQ9cFfI6qiy32wpfTkd}")
   private String clientId;
-  @Value("${client.secret}")
+  @Value("${client.secret:w24JTCv4MnAcuRTx0oHjHLDtyt3I6IBq}")
   private String clientSecret;
 
   private final WebClient webClient;
@@ -62,7 +62,7 @@ public class CdekAuthServiceImp implements CdekAuthService {
     if (doAuthRequest) {
       authorize(new AuthRequest(clientId, clientSecret))
           .doOnNext(authResponse -> authorization.put(AUTHORIZATION_KEY, authResponse))
-          .subscribe();
+          .block();
     }
     return "Bearer " + authorization.get(AUTHORIZATION_KEY).getAccessToken();
   }

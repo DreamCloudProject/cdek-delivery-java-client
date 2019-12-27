@@ -1,7 +1,7 @@
 package com.cdek.java.client.reactive;
 
 import com.cdek.java.client.AbstractCdekClient;
-import com.cdek.java.client.auth.CdekAuthService;
+import com.cdek.java.client.auth.service.CdekAuthService;
 import com.cdek.java.model.barcode.request.BarcodeRequest;
 import com.cdek.java.model.barcode.response.BarcodeResponse;
 import com.cdek.java.model.city.request.CityRequest;
@@ -19,6 +19,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

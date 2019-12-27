@@ -1,4 +1,4 @@
-package com.cdek.java.client.auth;
+package com.cdek.java.client.auth.service;
 
 import com.cdek.java.model.auth.request.AuthRequest;
 import com.cdek.java.model.auth.response.AuthResponse;

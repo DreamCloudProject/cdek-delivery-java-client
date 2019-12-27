@@ -1,12 +1,15 @@
 package com.cdek.java.model.auth.response;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.time.Instant;
 import java.util.UUID;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class AuthResponse {
 
   /**
@@ -17,7 +20,7 @@ public class AuthResponse {
   /**
    * Тип токена (всегда принимает значение "bearer")
    */
-  private TokenType tokenType;
+  private String tokenType;
 
   /**
    * Срок действия токена (по умолчанию 3600 секунд)
