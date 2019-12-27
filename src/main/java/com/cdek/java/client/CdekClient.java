@@ -3,7 +3,7 @@ package com.cdek.java.client;
 import com.cdek.java.model.barcode.request.BarcodeRequest;
 import com.cdek.java.model.barcode.response.BarcodeResponse;
 import com.cdek.java.model.city.request.CityRequest;
-import com.cdek.java.model.city.response.CityResponse;
+import com.cdek.java.model.city.response.City;
 import com.cdek.java.model.courier.request.CourierRequest;
 import com.cdek.java.model.courier.response.CourierResponse;
 import com.cdek.java.model.invoice.request.InvoiceRequest;
@@ -12,7 +12,6 @@ import com.cdek.java.model.order.request.OrderRequest;
 import com.cdek.java.model.order.response.OrderResponse;
 import com.cdek.java.model.region.request.RegionRequest;
 import com.cdek.java.model.region.response.Region;
-import com.cdek.java.model.region.response.RegionResponse;
 import java.util.List;
 import java.util.UUID;
 
@@ -71,6 +70,6 @@ public interface CdekClient {
    * Список населенных пунктов может быть ограничен характеристиками, задаваемыми пользователем.
    * @param cityRequest - объект содержащий информацию о запрашиваемых населенных пунктах.
    */
-  CityResponse getCitiesList(CityRequest cityRequest);
+  List<City> getCitiesList(CityRequest cityRequest);
 
 }

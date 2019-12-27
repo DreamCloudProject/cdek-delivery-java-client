@@ -3,7 +3,7 @@ package com.cdek.java.client.reactive;
 import com.cdek.java.model.barcode.request.BarcodeRequest;
 import com.cdek.java.model.barcode.response.BarcodeResponse;
 import com.cdek.java.model.city.request.CityRequest;
-import com.cdek.java.model.city.response.CityResponse;
+import com.cdek.java.model.city.response.City;
 import com.cdek.java.model.courier.request.CourierRequest;
 import com.cdek.java.model.courier.response.CourierResponse;
 import com.cdek.java.model.invoice.request.InvoiceRequest;
@@ -11,7 +11,7 @@ import com.cdek.java.model.invoice.response.InvoiceResponse;
 import com.cdek.java.model.order.request.OrderRequest;
 import com.cdek.java.model.order.response.OrderResponse;
 import com.cdek.java.model.region.request.RegionRequest;
-import com.cdek.java.model.region.response.RegionResponse;
+import com.cdek.java.model.region.response.Region;
 import java.util.UUID;
 import reactor.core.publisher.Mono;
 
@@ -62,7 +62,7 @@ public interface ReactiveCdekClient {
    * @param regionRequest - объект, содержащий
    * @return
    */
-  Mono<RegionResponse> getRegionsList(RegionRequest regionRequest);
+  Mono<Region> getRegionsList(RegionRequest regionRequest);
 
   /**
    * Список населенных пунктов.
@@ -70,6 +70,6 @@ public interface ReactiveCdekClient {
    * Список населенных пунктов может быть ограничен характеристиками, задаваемыми пользователем.
    * @param cityRequest - объект содержащий информацию о запрашиваемых населенных пунктах.
    */
-  Mono<CityResponse> getCitiesList(CityRequest cityRequest);
+  Mono<City> getCitiesList(CityRequest cityRequest);
 
 }

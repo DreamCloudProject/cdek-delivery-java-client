@@ -1,10 +1,12 @@
 package com.cdek.java.client;
 
 import com.cdek.java.client.auth.CdekAuthService;
+import com.cdek.java.exception.CdekException;
+import com.cdek.java.exception.CdekProxyException;
 import com.cdek.java.model.barcode.request.BarcodeRequest;
 import com.cdek.java.model.barcode.response.BarcodeResponse;
 import com.cdek.java.model.city.request.CityRequest;
-import com.cdek.java.model.city.response.CityResponse;
+import com.cdek.java.model.city.response.City;
 import com.cdek.java.model.courier.request.CourierRequest;
 import com.cdek.java.model.courier.response.CourierResponse;
 import com.cdek.java.model.invoice.request.InvoiceRequest;
@@ -14,7 +16,9 @@ import com.cdek.java.model.order.response.OrderResponse;
 import com.cdek.java.model.region.request.RegionRequest;
 import com.cdek.java.model.region.response.Region;
 import com.cdek.java.service.validation.ValidationService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -164,30 +168,43 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
    * {@inheritDoc}
    */
   @Override
-  @SneakyThrows
   public List<Region> getRegionsList(@NotNull RegionRequest regionRequest) {
     Objects.requireNonNull(regionRequest);
-    var json = objectMapper.writeValueAsBytes(regionRequest);
-    var requestBody = RequestBody.create(json);
-    var request = new Request.Builder()
-        .method("GET", requestBody)
-        .url(baseUrl + regionListUrl)
-        .build();
-    var response = webClient.newCall(request).execute();
-    var responseBody = response.body();
-    Objects.requireNonNull(responseBody);
-    var listMapper = objectMapper
-        .getTypeFactory()
-        .constructCollectionType(List.class, Region.class);
-    return objectMapper.readValue(responseBody.string(), listMapper);
+    var url = baseUrl + regionListUrl;
+    return getList(url, regionRequest, Region.class);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public CityResponse getCitiesList(@NotNull CityRequest cityRequest) {
+  public List<City> getCitiesList(@NotNull CityRequest cityRequest) {
     Objects.requireNonNull(cityRequest);
-    return null;
+    var url = baseUrl + citiesListUrl;
+    return getList(url, cityRequest, City.class);
+  }
+
+  private <T> List<T> getList(String url, Object requestEntity, Class<T> responseEntityClass) {
+    try {
+      var json = objectMapper.writeValueAsBytes(requestEntity);
+      var requestBody = RequestBody.create(json);
+      var request = new Request.Builder()
+          .url(url)
+          .method("GET", requestBody)
+          .build();
+      var response = webClient.newCall(request).execute();
+      var responseBody = response.body();
+      Objects.requireNonNull(responseBody);
+      var listMapper = objectMapper
+          .getTypeFactory()
+          .constructCollectionType(List.class, responseEntityClass);
+      return objectMapper.readValue(responseBody.string(), listMapper);
+    } catch (JsonProcessingException ex) {
+      log.info(ex.getMessage(), ex);
+      throw new CdekProxyException(ex.getMessage(), ex);
+    } catch (IOException ex) {
+      log.info(ex.getMessage(), ex);
+      throw new CdekException(ex.getMessage(), ex);
+    }
   }
 }
