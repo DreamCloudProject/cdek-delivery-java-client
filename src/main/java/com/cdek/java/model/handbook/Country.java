@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Country {
 
-  RUSSIA("00");
+  RUSSIA("ru");
 
   /**
    * Код страны в формате  ISO_3166-1_alpha-2

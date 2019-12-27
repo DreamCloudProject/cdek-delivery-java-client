@@ -11,7 +11,9 @@ import com.cdek.java.model.invoice.response.InvoiceResponse;
 import com.cdek.java.model.order.request.OrderRequest;
 import com.cdek.java.model.order.response.OrderResponse;
 import com.cdek.java.model.region.request.RegionRequest;
+import com.cdek.java.model.region.response.Region;
 import com.cdek.java.model.region.response.RegionResponse;
+import java.util.List;
 import java.util.UUID;
 
 public interface CdekClient {
@@ -61,7 +63,7 @@ public interface CdekClient {
    * @param regionRequest - объект, содержащий
    * @return
    */
-  RegionResponse getRegionsList(RegionRequest regionRequest);
+  List<Region> getRegionsList(RegionRequest regionRequest);
 
   /**
    * Список населенных пунктов.

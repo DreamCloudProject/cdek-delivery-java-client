@@ -12,9 +12,10 @@ import com.cdek.java.model.invoice.response.InvoiceResponse;
 import com.cdek.java.model.order.request.OrderRequest;
 import com.cdek.java.model.order.response.OrderResponse;
 import com.cdek.java.model.region.request.RegionRequest;
-import com.cdek.java.model.region.response.RegionResponse;
+import com.cdek.java.model.region.response.Region;
 import com.cdek.java.service.validation.ValidationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
@@ -163,9 +164,22 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
    * {@inheritDoc}
    */
   @Override
-  public RegionResponse getRegionsList(@NotNull RegionRequest regionRequest) {
+  @SneakyThrows
+  public List<Region> getRegionsList(@NotNull RegionRequest regionRequest) {
     Objects.requireNonNull(regionRequest);
-    return null;
+    var json = objectMapper.writeValueAsBytes(regionRequest);
+    var requestBody = RequestBody.create(json);
+    var request = new Request.Builder()
+        .method("GET", requestBody)
+        .url(baseUrl + regionListUrl)
+        .build();
+    var response = webClient.newCall(request).execute();
+    var responseBody = response.body();
+    Objects.requireNonNull(responseBody);
+    var listMapper = objectMapper
+        .getTypeFactory()
+        .constructCollectionType(List.class, Region.class);
+    return objectMapper.readValue(responseBody.string(), listMapper);
   }
 
   /**
