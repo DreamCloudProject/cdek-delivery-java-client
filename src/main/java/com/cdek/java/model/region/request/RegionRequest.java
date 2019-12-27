@@ -1,22 +1,20 @@
 package com.cdek.java.model.region.request;
 
 import com.cdek.java.model.handbook.Country;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
+@JsonInclude(Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class RegionRequest {
 
-  private List<Country> countryCode;
+  private List<Country> countryCodes;
   private String regionCode;
   private String kladrRegionCode;
   private UUID fiasRegionGuid;

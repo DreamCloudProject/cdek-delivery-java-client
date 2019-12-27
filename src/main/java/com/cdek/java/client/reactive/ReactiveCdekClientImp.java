@@ -5,7 +5,7 @@ import com.cdek.java.client.auth.CdekAuthService;
 import com.cdek.java.model.barcode.request.BarcodeRequest;
 import com.cdek.java.model.barcode.response.BarcodeResponse;
 import com.cdek.java.model.city.request.CityRequest;
-import com.cdek.java.model.city.response.CityResponse;
+import com.cdek.java.model.city.response.City;
 import com.cdek.java.model.courier.request.CourierRequest;
 import com.cdek.java.model.courier.response.CourierResponse;
 import com.cdek.java.model.invoice.request.InvoiceRequest;
@@ -13,13 +13,14 @@ import com.cdek.java.model.invoice.response.InvoiceResponse;
 import com.cdek.java.model.order.request.OrderRequest;
 import com.cdek.java.model.order.response.OrderResponse;
 import com.cdek.java.model.region.request.RegionRequest;
-import com.cdek.java.model.region.response.RegionResponse;
+import com.cdek.java.model.region.response.Region;
 import com.cdek.java.service.validation.ValidationService;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -38,7 +39,7 @@ public class ReactiveCdekClientImp extends AbstractCdekClient implements Reactiv
   public Mono<OrderResponse> orderRegistration(OrderRequest orderRequest) {
     return Mono.just(orderRequest)
         .flatMap(order -> {
-          validationService.validateOrder(order);
+          validationService.validateOrderRequest(order);
           return reactiveWebClient
               .post()
               .uri(ordersUrl)
@@ -135,7 +136,7 @@ public class ReactiveCdekClientImp extends AbstractCdekClient implements Reactiv
    * {@inheritDoc}
    */
   @Override
-  public Mono<RegionResponse> getRegionsList(RegionRequest regionRequest) {
+  public Flux<Region> getRegionsList(RegionRequest regionRequest) {
     return null;
   }
 
@@ -143,7 +144,7 @@ public class ReactiveCdekClientImp extends AbstractCdekClient implements Reactiv
    * {@inheritDoc}
    */
   @Override
-  public Mono<CityResponse> getCitiesList(CityRequest cityRequest) {
+  public Flux<City> getCitiesList(CityRequest cityRequest) {
     return null;
   }
 }

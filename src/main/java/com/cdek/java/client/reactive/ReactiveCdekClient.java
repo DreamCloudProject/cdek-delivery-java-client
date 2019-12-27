@@ -13,6 +13,7 @@ import com.cdek.java.model.order.response.OrderResponse;
 import com.cdek.java.model.region.request.RegionRequest;
 import com.cdek.java.model.region.response.Region;
 import java.util.UUID;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface ReactiveCdekClient {
@@ -62,7 +63,7 @@ public interface ReactiveCdekClient {
    * @param regionRequest - объект, содержащий
    * @return
    */
-  Mono<Region> getRegionsList(RegionRequest regionRequest);
+  Flux<Region> getRegionsList(RegionRequest regionRequest);
 
   /**
    * Список населенных пунктов.
@@ -70,6 +71,6 @@ public interface ReactiveCdekClient {
    * Список населенных пунктов может быть ограничен характеристиками, задаваемыми пользователем.
    * @param cityRequest - объект содержащий информацию о запрашиваемых населенных пунктах.
    */
-  Mono<City> getCitiesList(CityRequest cityRequest);
+  Flux<City> getCitiesList(CityRequest cityRequest);
 
 }

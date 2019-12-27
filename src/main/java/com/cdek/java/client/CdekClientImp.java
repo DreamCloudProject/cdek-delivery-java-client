@@ -52,7 +52,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
   @SneakyThrows
   public OrderResponse orderRegistration(@NotNull OrderRequest orderRequest) {
     Objects.requireNonNull(orderRequest);
-    validationService.validateOrder(orderRequest);
+    validationService.validateOrderRequest(orderRequest);
     var json = objectMapper.writeValueAsBytes(orderRequest);
     var requestBody = RequestBody.create(json);
     var request = new Request.Builder()
