@@ -163,7 +163,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
   public List<Region> getRegionsList(@NotNull RegionRequest regionRequest) {
     Objects.requireNonNull(regionRequest);
     var url = baseUrl + regionListUrl;
-    return doRequestForList(url, regionRequest, Region.class);
+    return doGetRequestForList(url, regionRequest, Region.class);
   }
 
   /**
@@ -173,7 +173,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
   public List<City> getCitiesList(@NotNull CityRequest cityRequest) {
     Objects.requireNonNull(cityRequest);
     var url = baseUrl + citiesListUrl;
-    return doRequestForList(url, cityRequest, City.class);
+    return doGetRequestForList(url, cityRequest, City.class);
   }
 
   private <T> T doRequestForObject(String url, String method, @Nullable Object requestEntity,
@@ -189,7 +189,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
     }
   }
 
-  private <T> List<T> doRequestForList(String url, @Nullable Object requestEntity,
+  private <T> List<T> doGetRequestForList(String url, @Nullable Object requestEntity,
       Class<T> responseEntityClass) {
     try {
       var response = doRequest(url, "GET", requestEntity);
@@ -215,7 +215,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
     var request = HttpRequest.newBuilder()
         .uri(URI.create(url))
         .header(HttpHeaders.AUTHORIZATION, cdekAuthService.getFreshJWT())
-        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .method(method, bodyPublisher)
         .build();
     return httpClient.send(request, BodyHandlers.ofString());
