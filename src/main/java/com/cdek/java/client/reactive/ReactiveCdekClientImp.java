@@ -18,8 +18,8 @@ import com.cdek.java.service.validation.ValidationService;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -44,7 +44,7 @@ public class ReactiveCdekClientImp extends AbstractCdekClient implements Reactiv
           return reactiveWebClient
               .post()
               .uri(ordersUrl)
-              .header(AUTH_HEADER, cdekAuthService.getFreshJWT())
+              .header(HttpHeaders.AUTHORIZATION, cdekAuthService.getFreshJWT())
               .body(Mono.just(order), OrderRequest.class)
               .retrieve()
               .bodyToMono(OrderResponse.class);
@@ -59,7 +59,7 @@ public class ReactiveCdekClientImp extends AbstractCdekClient implements Reactiv
     return reactiveWebClient
         .get()
         .uri(ordersUrl + "/" + uuid)
-        .header(AUTH_HEADER, cdekAuthService.getFreshJWT())
+        .header(HttpHeaders.AUTHORIZATION, cdekAuthService.getFreshJWT())
         .retrieve()
         .bodyToMono(OrderResponse.class);
   }
@@ -72,7 +72,7 @@ public class ReactiveCdekClientImp extends AbstractCdekClient implements Reactiv
     return reactiveWebClient
         .delete()
         .uri(ordersUrl + "/" + uuid)
-        .header(AUTH_HEADER, cdekAuthService.getFreshJWT())
+        .header(HttpHeaders.AUTHORIZATION, cdekAuthService.getFreshJWT())
         .retrieve()
         .bodyToMono(OrderResponse.class);
   }

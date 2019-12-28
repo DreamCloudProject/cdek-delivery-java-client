@@ -30,6 +30,8 @@ import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
@@ -212,7 +214,8 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
     }
     var request = HttpRequest.newBuilder()
         .uri(URI.create(url))
-        .header(AUTH_HEADER, cdekAuthService.getFreshJWT())
+        .header(HttpHeaders.AUTHORIZATION, cdekAuthService.getFreshJWT())
+        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
         .method(method, bodyPublisher)
         .build();
     return httpClient.send(request, BodyHandlers.ofString());

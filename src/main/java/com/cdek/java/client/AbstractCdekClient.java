@@ -4,7 +4,6 @@ import com.cdek.java.commons.Api;
 
 public abstract class AbstractCdekClient {
 
-  protected static final String AUTH_HEADER = "Authorization";
   private static final String versionedUrl = Api.version;
   protected static final String ordersUrl = versionedUrl + "/orders";
   protected static final String courierUrl = versionedUrl + "/intakes";
