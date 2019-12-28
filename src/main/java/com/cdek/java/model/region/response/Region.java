@@ -13,23 +13,44 @@ import lombok.Setter;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Region {
 
+  /**
+   * Код страны в формате  ISO_3166-1_alpha-2
+   */
   @Size(max = 2)
   private String countryCode;
 
+  /**
+   * Название страны региона
+   */
   @Size(max = 255)
   private String country;
 
+  /**
+   * Название региона
+   */
   @Size(max = 255)
   private String region;
 
+  /**
+   * Код региона СДЭК
+   */
   @Size(max = 255)
   private String regionCode;
 
+  /**
+   * Код КЛАДР региона
+   */
   @Size(max = 255)
   private String kladrRegionCode;
 
-  private UUID fiasRegionCode;
+  /**
+   * Уникальный идентификатор ФИАС региона
+   */
+  private UUID fiasRegionGuid;
 
+  /**
+   * Список ошибок
+   */
   private List<Error> errors;
 
 }

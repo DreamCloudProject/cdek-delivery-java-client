@@ -17,42 +17,37 @@ import com.cdek.java.model.region.response.Region;
 import com.cdek.java.service.validation.ValidationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class CdekClientImp extends AbstractCdekClient implements CdekClient {
 
-  @Value("${cdek.base.url:https://api.edu.cdek.ru}")
+  @Value("${cdek.base.url}")
   private String baseUrl;
 
-  @PostConstruct
-  public void init() {
-    System.out.println("AJDKLJASKLDJKLASDKLSAD" + baseUrl);
+  public void setBaseUrl(String baseUrl) {
+    this.baseUrl = baseUrl;
   }
 
   private final ValidationService validationService;
   private final CdekAuthService cdekAuthService;
-  private final OkHttpClient webClient;
-  private final RestTemplate restTemplate;
+  private final HttpClient httpClient;
   private final ObjectMapper objectMapper;
 
   /**
@@ -63,7 +58,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
     Objects.requireNonNull(orderRequest);
     validationService.validateOrderRequest(orderRequest);
     var url = baseUrl + ordersUrl;
-    return doRequest(url, "POST", orderRequest, OrderResponse.class);
+    return doRequestForObject(url, "POST", orderRequest, OrderResponse.class);
   }
 
   /**
@@ -73,7 +68,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
   public OrderResponse getOrderInfo(@NotNull UUID uuid) {
     Objects.requireNonNull(uuid);
     var url = baseUrl + ordersUrl + "/" + uuid;
-    return doRequest(url, "GET", null, OrderResponse.class);
+    return doRequestForObject(url, "GET", null, OrderResponse.class);
   }
 
   /**
@@ -83,7 +78,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
   public OrderResponse deleteOrder(@NotNull UUID uuid) {
     Objects.requireNonNull(uuid);
     var url = baseUrl + ordersUrl + "/" + uuid;
-    return doRequest(url, "DELETE", null, OrderResponse.class);
+    return doRequestForObject(url, "DELETE", null, OrderResponse.class);
   }
 
   /**
@@ -94,7 +89,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
     Objects.requireNonNull(courierRequest);
     validationService.validateCourierRequest(courierRequest);
     var url = baseUrl + courierUrl;
-    return doRequest(url, "POST", courierRequest, CourierResponse.class);
+    return doRequestForObject(url, "POST", courierRequest, CourierResponse.class);
   }
 
   /**
@@ -104,7 +99,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
   public CourierResponse getCourierRequestInfo(@NotNull UUID uuid) {
     Objects.requireNonNull(uuid);
     var url = baseUrl + courierUrl + "/" + uuid;
-    return doRequest(url, "GET", null, CourierResponse.class);
+    return doRequestForObject(url, "GET", null, CourierResponse.class);
   }
 
   /**
@@ -114,7 +109,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
   public CourierResponse deleteCourierRequest(@NotNull UUID uuid) {
     Objects.requireNonNull(uuid);
     var url = baseUrl + courierUrl + "/" + uuid;
-    return doRequest(url, "DELETE", null, CourierResponse.class);
+    return doRequestForObject(url, "DELETE", null, CourierResponse.class);
   }
 
   /**
@@ -125,7 +120,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
     Objects.requireNonNull(invoiceRequest);
     validationService.validateInvoiceRequest(invoiceRequest);
     var url = baseUrl + invoiceUrl;
-    return doRequest(url, "POST", invoiceRequest, InvoiceResponse.class);
+    return doRequestForObject(url, "POST", invoiceRequest, InvoiceResponse.class);
   }
 
   /**
@@ -135,7 +130,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
   public InvoiceResponse getInvoiceForOrder(@NotNull UUID uuid) {
     Objects.requireNonNull(uuid);
     var url = baseUrl + invoiceUrl + "/" + uuid;
-    return doRequest(url, "GET", null, InvoiceResponse.class);
+    return doRequestForObject(url, "GET", null, InvoiceResponse.class);
   }
 
   /**
@@ -146,7 +141,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
     Objects.requireNonNull(barcodeRequest);
     validationService.validateBarcodeRequest(barcodeRequest);
     var url = baseUrl + barcodeUrl;
-    return doRequest(url, "POST", barcodeRequest, BarcodeResponse.class);
+    return doRequestForObject(url, "POST", barcodeRequest, BarcodeResponse.class);
   }
 
   /**
@@ -156,7 +151,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
   public BarcodeResponse getBarcodePlaceForOrder(@NotNull UUID uuid) {
     Objects.requireNonNull(uuid);
     var url = baseUrl + barcodeUrl + "/" + uuid;
-    return doRequest(url,"GET", null, BarcodeResponse.class);
+    return doRequestForObject(url, "GET", null, BarcodeResponse.class);
   }
 
   /**
@@ -179,53 +174,47 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
     return getList(url, cityRequest, City.class);
   }
 
-  private <T> T doRequest(String url, String method, @Nullable Object requestEntity, Class<T> responseEntityClass) {
+  private <T> T doRequestForObject(String url, String method, @Nullable Object requestEntity,
+      Class<T> responseEntityClass) {
     try {
-      RequestBody requestBody = null;
-      if (requestEntity != null) {
-        var json = objectMapper.writeValueAsBytes(requestEntity);
-        requestBody = RequestBody.create(json);
-      }
-      var request = new Request.Builder()
-          .method(method, requestBody)
-          .url(url)
-          .header(AUTH_HEADER, cdekAuthService.getFreshJWT())
-          .build();
-      var response = webClient.newCall(request).execute();
+      var response = doRequest(url, method, requestEntity);
       var responseBody = response.body();
       Objects.requireNonNull(responseBody);
-      return objectMapper.readValue(responseBody.string(), responseEntityClass);
-    } catch (IOException ex) {
+      return objectMapper.readValue(responseBody, responseEntityClass);
+    } catch (IOException | InterruptedException ex) {
       log.error(ex.getMessage(), ex);
       throw new CdekProxyException(ex.getMessage(), ex);
     }
   }
 
-  private <T> List<T> getList(String url, Object requestEntity, Class<T> responseEntityClass) {
-//    try {
-//      var json = objectMapper.writeValueAsBytes(requestEntity);
-//      var requestBody = RequestBody.create(json);
-//      var request = new Request.Builder()
-//          .url(url)
-//          .header("Authorization", cdekAuthService.getFreshJWT())
-//          .method("POST", requestBody)
-//          .build();
-//      var response = webClient.newCall(request).execute();
-//      var responseBody = response.body();
-//      Objects.requireNonNull(responseBody);
-//      var listMapper = objectMapper
-//          .getTypeFactory()
-//          .constructCollectionType(List.class, responseEntityClass);
-//      return objectMapper.readValue(responseBody.string(), listMapper);
-//    } catch (IOException ex) {
-//      log.error(ex.getMessage(), ex);
-//      throw new CdekProxyException(ex.getMessage(), ex);
-//    }
+  private <T> List<T> getList(String url, @Nullable Object requestEntity,
+      Class<T> responseEntityClass) {
+    try {
+      var response = doRequest(url, "GET", requestEntity);
+      var responseBody = response.body();
+      Objects.requireNonNull(responseBody);
+      var listMapper = objectMapper
+          .getTypeFactory()
+          .constructCollectionType(List.class, responseEntityClass);
+      return objectMapper.readValue(responseBody, listMapper);
+    } catch (IOException | InterruptedException ex) {
+      log.error(ex.getMessage(), ex);
+      throw new CdekProxyException(ex.getMessage(), ex);
+    }
+  }
 
-//    var httpHeaders = new HttpHeaders();
-//    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-//    httpHeaders.set(AUTH_HEADER, cdekAuthService.getFreshJWT());
-//    var httpEntity = new HttpEntity<>(requestEntity, httpHeaders);
-//    restTemplate.exchange(url, HttpMethod.GET, httpEntity, httpEntity, )
+  private HttpResponse<String> doRequest(String url, String method, @Nullable Object requestEntity)
+      throws IOException, InterruptedException {
+    var bodyPublisher = BodyPublishers.noBody();
+    if (requestEntity != null) {
+      var json = objectMapper.writeValueAsBytes(requestEntity);
+      bodyPublisher = BodyPublishers.ofByteArray(json);
+    }
+    var request = HttpRequest.newBuilder()
+        .uri(URI.create(url))
+        .header(AUTH_HEADER, cdekAuthService.getFreshJWT())
+        .method(method, bodyPublisher)
+        .build();
+    return httpClient.send(request, BodyHandlers.ofString());
   }
 }

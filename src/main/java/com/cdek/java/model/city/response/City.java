@@ -37,10 +37,15 @@ public class City {
   /**
    * Код страны населенного пункта в формате  ISO_3166-1_alpha-2
    */
-  private String country;
+  private String countryCode;
 
   /**
    * Название страны населенного пункта
+   */
+  private String country;
+
+  /**
+   * Название региона населенного пункта
    */
   private String region;
 
