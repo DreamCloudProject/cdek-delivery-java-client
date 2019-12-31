@@ -1,7 +1,9 @@
 package com.cdek.java.client;
 
-import com.cdek.java.client.auth.service.CdekAuthService;
+import com.cdek.java.client.auth.CdekAuthentication;
 import com.cdek.java.exception.CdekProxyException;
+import com.cdek.java.model.auth.request.AuthRequest;
+import com.cdek.java.model.auth.response.AuthResponse;
 import com.cdek.java.model.barcode.request.BarcodeRequest;
 import com.cdek.java.model.barcode.response.BarcodeResponse;
 import com.cdek.java.model.city.request.CityRequest;
@@ -34,6 +36,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Slf4j
 @Service
@@ -48,138 +51,253 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
   }
 
   private final ValidationService validationService;
-  private final CdekAuthService cdekAuthService;
   private final HttpClient httpClient;
   private final ObjectMapper objectMapper;
 
+
   /**
    * {@inheritDoc}
    */
   @Override
-  public OrderResponse orderRegistration(@NotNull OrderRequest orderRequest) {
-    Objects.requireNonNull(orderRequest);
+  public AuthResponse authenticate(AuthRequest authRequest) {
+
+    var uri = UriComponentsBuilder.newInstance()
+        .uri(URI.create(baseUrl + authUrl))
+        .queryParam("grant_type", authRequest.getGrantType().name().toLowerCase())
+        .queryParam("client_id", authRequest.getClientId())
+        .queryParam("client_secret", authRequest.getClientSecret())
+        .build()
+        .toUriString();
+
+    return doRequestForObject(
+        uri,
+        "POST",
+        null,
+        AuthResponse.class,
+        null);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public OrderResponse orderRegistration(
+      @NotNull OrderRequest orderRequest,
+      @NotNull CdekAuthentication authentication) {
+
+    if (orderRequest == null) {
+      throw new CdekProxyException("Поле orderRequest не может быть null.");
+    }
+    requireNonNullAccessToken(authentication);
     validationService.validateOrderRequest(orderRequest);
     var url = baseUrl + ordersUrl;
-    return doRequestForObject(url, "POST", orderRequest, OrderResponse.class);
+
+    return doRequestForObject(url, "POST", orderRequest, OrderResponse.class, authentication);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public OrderResponse getOrderInfo(@NotNull UUID uuid) {
-    Objects.requireNonNull(uuid);
+  public OrderResponse getOrderInfo(
+      @NotNull UUID uuid,
+      @NotNull CdekAuthentication authentication) {
+
+    if (uuid == null) {
+      throw new CdekProxyException("Поле uuid не может быть null.");
+    }
+    requireNonNullAccessToken(authentication);
     var url = baseUrl + ordersUrl + "/" + uuid;
-    return doRequestForObject(url, "GET", null, OrderResponse.class);
+
+    return doRequestForObject(url, "GET", null, OrderResponse.class, authentication);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public OrderResponse deleteOrder(@NotNull UUID uuid) {
-    Objects.requireNonNull(uuid);
+  public OrderResponse deleteOrder(
+      @NotNull UUID uuid,
+      @NotNull CdekAuthentication authentication) {
+
+    if (uuid == null) {
+      throw new CdekProxyException("Поле uuid не может быть null");
+    }
+    requireNonNullAccessToken(authentication);
     var url = baseUrl + ordersUrl + "/" + uuid;
-    return doRequestForObject(url, "DELETE", null, OrderResponse.class);
+
+    return doRequestForObject(url, "DELETE", null, OrderResponse.class, authentication);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public CourierResponse createCourierDeliveryRequest(@NotNull CourierRequest courierRequest) {
-    Objects.requireNonNull(courierRequest);
+  public CourierResponse createCourierDeliveryRequest(
+      @NotNull CourierRequest courierRequest,
+      @NotNull CdekAuthentication authentication) {
+
+    if (courierRequest == null) {
+      throw new CdekProxyException("Поле courierRequest не может быть null");
+    }
+    requireNonNullAccessToken(authentication);
     validationService.validateCourierRequest(courierRequest);
     var url = baseUrl + courierUrl;
-    return doRequestForObject(url, "POST", courierRequest, CourierResponse.class);
+
+    return doRequestForObject(url, "POST", courierRequest, CourierResponse.class, authentication);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public CourierResponse getCourierRequestInfo(@NotNull UUID uuid) {
-    Objects.requireNonNull(uuid);
+  public CourierResponse getCourierRequestInfo(
+      @NotNull UUID uuid,
+      @NotNull CdekAuthentication authentication) {
+
+    if (uuid == null) {
+      throw new CdekProxyException("Поле uuid не может быть null");
+    }
+    requireNonNullAccessToken(authentication);
     var url = baseUrl + courierUrl + "/" + uuid;
-    return doRequestForObject(url, "GET", null, CourierResponse.class);
+
+    return doRequestForObject(url, "GET", null, CourierResponse.class, authentication);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public CourierResponse deleteCourierRequest(@NotNull UUID uuid) {
-    Objects.requireNonNull(uuid);
+  public CourierResponse deleteCourierRequest(
+      @NotNull UUID uuid,
+      @NotNull CdekAuthentication authentication) {
+
+    if (uuid == null) {
+      throw new CdekProxyException("Поле uuid не может быть null");
+    }
+    requireNonNullAccessToken(authentication);
     var url = baseUrl + courierUrl + "/" + uuid;
-    return doRequestForObject(url, "DELETE", null, CourierResponse.class);
+
+    return doRequestForObject(url, "DELETE", null, CourierResponse.class, authentication);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public InvoiceResponse formOrderInvoice(@NotNull InvoiceRequest invoiceRequest) {
-    Objects.requireNonNull(invoiceRequest);
+  public InvoiceResponse formOrderInvoice(
+      @NotNull InvoiceRequest invoiceRequest,
+      @NotNull CdekAuthentication authentication) {
+
+    if (invoiceRequest == null) {
+      throw new CdekProxyException("Поле по invoiceRequest не может быть null");
+    }
+    requireNonNullAccessToken(authentication);
     validationService.validateInvoiceRequest(invoiceRequest);
     var url = baseUrl + invoiceUrl;
-    return doRequestForObject(url, "POST", invoiceRequest, InvoiceResponse.class);
+
+    return doRequestForObject(url, "POST", invoiceRequest, InvoiceResponse.class, authentication);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public InvoiceResponse getInvoiceForOrder(@NotNull UUID uuid) {
-    Objects.requireNonNull(uuid);
+  public InvoiceResponse getInvoiceForOrder(
+      @NotNull UUID uuid,
+      @NotNull CdekAuthentication authentication) {
+
+    if (uuid == null) {
+      throw new CdekProxyException("Поле uuid не может быть null.");
+    }
+    requireNonNullAccessToken(authentication);
     var url = baseUrl + invoiceUrl + "/" + uuid;
-    return doRequestForObject(url, "GET", null, InvoiceResponse.class);
+    return doRequestForObject(url, "GET", null, InvoiceResponse.class, authentication);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public BarcodeResponse formBarcodePlaceForOrder(@NotNull BarcodeRequest barcodeRequest) {
-    Objects.requireNonNull(barcodeRequest);
+  public BarcodeResponse formBarcodePlaceForOrder(
+      @NotNull BarcodeRequest barcodeRequest,
+      @NotNull CdekAuthentication authentication) {
+
+    if (barcodeRequest == null) {
+      throw new CdekProxyException("Поле barcodeRequest не может null.");
+    }
+    requireNonNullAccessToken(authentication);
     validationService.validateBarcodeRequest(barcodeRequest);
     var url = baseUrl + barcodeUrl;
-    return doRequestForObject(url, "POST", barcodeRequest, BarcodeResponse.class);
+    return doRequestForObject(url, "POST", barcodeRequest, BarcodeResponse.class, authentication);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public BarcodeResponse getBarcodePlaceForOrder(@NotNull UUID uuid) {
-    Objects.requireNonNull(uuid);
+  public BarcodeResponse getBarcodePlaceForOrder(
+      @NotNull UUID uuid,
+      @NotNull CdekAuthentication authentication) {
+
+    if (uuid == null) {
+      throw new CdekProxyException("Поле uuid не может быть null.");
+    }
+    requireNonNullAccessToken(authentication);
     var url = baseUrl + barcodeUrl + "/" + uuid;
-    return doRequestForObject(url, "GET", null, BarcodeResponse.class);
+    return doRequestForObject(url, "GET", null, BarcodeResponse.class, authentication);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public List<Region> getRegionsList(@NotNull RegionRequest regionRequest) {
-    Objects.requireNonNull(regionRequest);
+  public List<Region> getRegionsList(
+      @NotNull RegionRequest regionRequest,
+      @NotNull CdekAuthentication authentication) {
+
+    if (regionRequest == null) {
+      throw new CdekProxyException("Поле regionRequest не может быть null.");
+    }
+    requireNonNullAccessToken(authentication);
     var url = baseUrl + regionListUrl;
-    return doGetRequestForList(url, regionRequest, Region.class);
+    return doGetRequestForList(url, regionRequest, Region.class, authentication);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public List<City> getCitiesList(@NotNull CityRequest cityRequest) {
-    Objects.requireNonNull(cityRequest);
+  public List<City> getCitiesList(
+      @NotNull CityRequest cityRequest,
+      @NotNull CdekAuthentication authentication) {
+
+    if (cityRequest == null) {
+      throw new CdekProxyException("Поле cityRequest не может быть null.");
+    }
+    requireNonNullAccessToken(authentication);
     var url = baseUrl + citiesListUrl;
-    return doGetRequestForList(url, cityRequest, City.class);
+    return doGetRequestForList(url, cityRequest, City.class, authentication);
   }
 
-  private <T> T doRequestForObject(String url, String method, @Nullable Object requestEntity,
-      Class<T> responseEntityClass) {
+  private void requireNonNullAccessToken(CdekAuthentication authentication) {
+    if (authentication == null) {
+      throw new CdekProxyException("Поле authentication не может быть null.");
+    }
+    if (authentication.getAccessToken() == null) {
+      throw new CdekProxyException("Токен доступа не может быть null.");
+    }
+  }
+
+  private <T> T doRequestForObject(
+      String url,
+      String method,
+      @Nullable Object requestEntity,
+      Class<T> responseEntityClass,
+      @Nullable CdekAuthentication authentication) {
+
     try {
-      var response = doRequest(url, method, requestEntity);
+      var response = doRequest(url, method, requestEntity, authentication);
       var responseBody = response.body();
       Objects.requireNonNull(responseBody);
       return objectMapper.readValue(responseBody, responseEntityClass);
@@ -189,10 +307,14 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
     }
   }
 
-  private <T> List<T> doGetRequestForList(String url, @Nullable Object requestEntity,
-      Class<T> responseEntityClass) {
+  private <T> List<T> doGetRequestForList(
+      String url,
+      @Nullable Object requestEntity,
+      Class<T> responseEntityClass,
+      CdekAuthentication authentication) {
+
     try {
-      var response = doRequest(url, "GET", requestEntity);
+      var response = doRequest(url, "GET", requestEntity, authentication);
       var responseBody = response.body();
       Objects.requireNonNull(responseBody);
       var listMapper = objectMapper
@@ -205,19 +327,25 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
     }
   }
 
-  private HttpResponse<String> doRequest(String url, String method, @Nullable Object requestEntity)
-      throws IOException, InterruptedException {
+  private HttpResponse<String> doRequest(
+      String url,
+      String method,
+      @Nullable Object requestEntity,
+      CdekAuthentication authentication) throws IOException, InterruptedException {
+
     var bodyPublisher = BodyPublishers.noBody();
     if (requestEntity != null) {
       var json = objectMapper.writeValueAsBytes(requestEntity);
       bodyPublisher = BodyPublishers.ofByteArray(json);
     }
-    var request = HttpRequest.newBuilder()
+    var requestBuilder = HttpRequest.newBuilder()
         .uri(URI.create(url))
-        .header(HttpHeaders.AUTHORIZATION, cdekAuthService.getFreshJWT())
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-        .method(method, bodyPublisher)
-        .build();
+        .method(method, bodyPublisher);
+    if (authentication != null && authentication.getAccessToken() != null) {
+      requestBuilder.header(HttpHeaders.AUTHORIZATION, authentication.getAccessToken());
+    }
+    var request = requestBuilder.build();
     return httpClient.send(request, BodyHandlers.ofString());
   }
 }

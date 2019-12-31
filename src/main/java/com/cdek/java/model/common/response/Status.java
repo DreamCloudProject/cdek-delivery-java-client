@@ -2,17 +2,20 @@ package com.cdek.java.model.common.response;
 
 import com.cdek.java.commons.Pattern;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.time.Instant;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * Статус заказа, заявки
  */
-@Getter
-@Setter
+@Data
+@JsonInclude(Include.NON_NULL)
 public class Status {
 
   /**

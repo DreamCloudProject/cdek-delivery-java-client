@@ -1,5 +1,8 @@
 package com.cdek.java.client;
 
+import com.cdek.java.client.auth.CdekAuthentication;
+import com.cdek.java.model.auth.request.AuthRequest;
+import com.cdek.java.model.auth.response.AuthResponse;
 import com.cdek.java.model.barcode.request.BarcodeRequest;
 import com.cdek.java.model.barcode.response.BarcodeResponse;
 import com.cdek.java.model.city.request.CityRequest;
@@ -17,6 +20,8 @@ import java.util.UUID;
 
 public interface CdekClient {
 
+  AuthResponse authenticate(AuthRequest authRequest);
+
   /**
    * Запрос на регистрацию заказа
    * @param orderRequest - описание заказа
@@ -25,21 +30,21 @@ public interface CdekClient {
    * ответа будет возвращено описание ошибки в формате error и HTTP-статус будет установлен в
    * соответствии с состоянием ошибки.
    */
-  OrderResponse orderRegistration(OrderRequest orderRequest);
+  OrderResponse orderRegistration(OrderRequest orderRequest, CdekAuthentication authentication);
 
   /**
    * Запрос на получение информации о заказе
    * @param uuid - идентификатор заказа в ИС СДЭК, по которому необходима информация
    * @return объект с информацией по заказу
    */
-  OrderResponse getOrderInfo(UUID uuid);
+  OrderResponse getOrderInfo(UUID uuid, CdekAuthentication authentication);
 
   /**
    * Запрос на удаление заказа
    * @param uuid - идентификатор заказа в ИС СДЭК, который необходимо удалить
    * @return объект с информацией по удаленному заказу
    */
-  OrderResponse deleteOrder(UUID uuid);
+  OrderResponse deleteOrder(UUID uuid, CdekAuthentication authentication);
 
   /**
    * Регистрация заявки на вызов курьера
@@ -52,7 +57,7 @@ public interface CdekClient {
    * @param courierRequest
    * @return
    */
-  CourierResponse createCourierDeliveryRequest(CourierRequest courierRequest);
+  CourierResponse createCourierDeliveryRequest(CourierRequest courierRequest, CdekAuthentication authentication);
 
   /**
    * Информация о заявке
@@ -60,7 +65,7 @@ public interface CdekClient {
    * @param uuid - идентификатор заявки в ИС СДЭК, по которому необходима информация
    * @return
    */
-  CourierResponse getCourierRequestInfo(UUID uuid);
+  CourierResponse getCourierRequestInfo(UUID uuid, CdekAuthentication authentication);
 
   /**
    * Удаление заявки
@@ -68,7 +73,7 @@ public interface CdekClient {
    * @param uuid - идентификатор заявки в ИС СДЭК, которую необходимо отменить
    * @return
    */
-  CourierResponse deleteCourierRequest(UUID uuid);
+  CourierResponse deleteCourierRequest(UUID uuid, CdekAuthentication authentication);
 
   /**
    * Формирование квитанции к заказу
@@ -77,7 +82,7 @@ public interface CdekClient {
    * @param invoiceRequest
    * @return
    */
-  InvoiceResponse formOrderInvoice(InvoiceRequest invoiceRequest);
+  InvoiceResponse formOrderInvoice(InvoiceRequest invoiceRequest, CdekAuthentication authentication);
 
   /**
    * Получение квитанции к заказу
@@ -85,7 +90,7 @@ public interface CdekClient {
    * @param uuid - идентификатор квитанции, ссылку на которую необходимо получить
    * @return
    */
-  InvoiceResponse getInvoiceForOrder(UUID uuid);
+  InvoiceResponse getInvoiceForOrder(UUID uuid, CdekAuthentication authentication);
 
   /**
    * Формирование ШК-места к заказу
@@ -94,7 +99,7 @@ public interface CdekClient {
    * @param barcodeRequest
    * @return
    */
-  BarcodeResponse formBarcodePlaceForOrder(BarcodeRequest barcodeRequest);
+  BarcodeResponse formBarcodePlaceForOrder(BarcodeRequest barcodeRequest, CdekAuthentication authentication);
 
   /**
    * Получение ШК-места к заказу
@@ -102,7 +107,7 @@ public interface CdekClient {
    * @param uuid - идентификатор ШК-места, ссылку на который необходимо получить
    * @return
    */
-  BarcodeResponse getBarcodePlaceForOrder(UUID uuid);
+  BarcodeResponse getBarcodePlaceForOrder(UUID uuid, CdekAuthentication authentication);
 
   /**
    * Список регионов.
@@ -111,7 +116,7 @@ public interface CdekClient {
    * @param regionRequest - объект, содержащий
    * @return
    */
-  List<Region> getRegionsList(RegionRequest regionRequest);
+  List<Region> getRegionsList(RegionRequest regionRequest, CdekAuthentication authentication);
 
   /**
    * Список населенных пунктов.
@@ -119,6 +124,6 @@ public interface CdekClient {
    * Список населенных пунктов может быть ограничен характеристиками, задаваемыми пользователем.
    * @param cityRequest - объект содержащий информацию о запрашиваемых населенных пунктах.
    */
-  List<City> getCitiesList(CityRequest cityRequest);
+  List<City> getCitiesList(CityRequest cityRequest, CdekAuthentication authentication);
 
 }
