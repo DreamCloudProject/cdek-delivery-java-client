@@ -45,25 +45,25 @@ public class CdekAuthServiceImp implements CdekAuthService {
         .bodyToMono(AuthResponse.class);
   }
 
-  @Override
-  public String getFreshJWT() {
-    var auth = authorization.get(AUTHORIZATION_KEY);
-    var doAuthRequest = false;
-    if (auth == null) {
-      doAuthRequest = true;
-    } else {
-      var now = Instant.now();
-      var received = auth.getReceived();
-      var expiresIn = auth.getExpiresIn();
-      if (Duration.between(now, received).toSeconds() > expiresIn) {
-        doAuthRequest = true;
-      }
-    }
-    if (doAuthRequest) {
-      authorize(new AuthRequest(clientId, clientSecret))
-          .doOnNext(authResponse -> authorization.put(AUTHORIZATION_KEY, authResponse))
-          .block();
-    }
-    return "Bearer " + authorization.get(AUTHORIZATION_KEY).getAccessToken();
-  }
+//  @Override
+//  public String getFreshJWT() {
+//    var auth = authorization.get(AUTHORIZATION_KEY);
+//    var doAuthRequest = false;
+//    if (auth == null) {
+//      doAuthRequest = true;
+//    } else {
+//      var now = Instant.now();
+//      var received = auth.getReceived();
+//      var expiresIn = auth.getExpiresIn();
+//      if (Duration.between(now, received).toSeconds() > expiresIn) {
+//        doAuthRequest = true;
+//      }
+//    }
+//    if (doAuthRequest) {
+//      authorize(new AuthRequest(clientId, clientSecret))
+//          .doOnNext(authResponse -> authorization.put(AUTHORIZATION_KEY, authResponse))
+//          .block();
+//    }
+//    return "Bearer " + authorization.get(AUTHORIZATION_KEY).getAccessToken();
+//  }
 }
