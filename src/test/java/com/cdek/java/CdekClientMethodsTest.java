@@ -3,6 +3,7 @@ package com.cdek.java;
 import com.cdek.java.client.CdekClient;
 import com.cdek.java.client.CdekClientImp;
 import com.cdek.java.client.reactive.ReactiveCdekClient;
+import com.cdek.java.model.auth.request.AuthRequest;
 import com.cdek.java.model.city.request.CityRequest;
 import com.cdek.java.model.handbook.Country;
 import com.cdek.java.model.region.request.RegionRequest;
@@ -32,6 +33,12 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
   @Test
   public void getRegionListSyncTest() {
 
+    var authRequest = new AuthRequest();
+    authRequest.setClientId(clientId);
+    authRequest.setClientSecret(clientSecret);
+
+    var authResponse = cdekClient.authenticate(authRequest);
+
     var size = 3; // Ограничение выборки
 
     var regionRequest = new RegionRequest();
@@ -39,7 +46,7 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
     regionRequest.setCountryCodes(countryCodes);
     regionRequest.setSize(size);
 
-    var regions = cdekClient.getRegionsList(regionRequest);
+    var regions = cdekClient.getRegionsList(regionRequest, authResponse);
 
     Assert.assertEquals(size, regions.size());
 
@@ -51,6 +58,12 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
   @Test
   public void getCitiesListSyncTest() {
 
+    var authRequest = new AuthRequest();
+    authRequest.setClientId(clientId);
+    authRequest.setClientSecret(clientSecret);
+
+    var authResponse = cdekClient.authenticate(authRequest);
+
     var size = 3; // Ограничение выборки
 
     var cityRequest = new CityRequest();
@@ -59,7 +72,7 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
     cityRequest.setSize(size);
     cityRequest.setRegionCode("23");
 
-    var cities = cdekClient.getCitiesList(cityRequest);
+    var cities = cdekClient.getCitiesList(cityRequest, authResponse);
 
     Assert.assertEquals(size, cities.size());
 
