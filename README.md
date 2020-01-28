@@ -81,10 +81,6 @@ client:
     secret: 'yours_client_secret' # Здесь указывается ваш секретный ключ из договора
 ```
 
-### Включение тестового режима
-
-Как известно из официельной документации 
-
 [0]: https://img.shields.io/badge/stability-experemental-orange
 [1]: https://nodejs.org/api/documentation.html#documentation_stability_index
 [2]: https://img.shields.io/badge/java-11-blue
