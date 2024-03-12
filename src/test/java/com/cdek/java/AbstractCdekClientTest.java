@@ -13,9 +13,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @Import(CdekClientConfiguration.class)
 public abstract class AbstractCdekClientTest {
 
-  @Value("${client.id:z9GRRu7FxmO53CQ9cFfI6qiy32wpfTkd}")
+  @Value("${client.id:EMscd6r9JnFiQ3bLoyjJY6eM78JrJceI}")
   protected String clientId;
-  @Value("${client.secret:w24JTCv4MnAcuRTx0oHjHLDtyt3I6IBq}")
+  @Value("${client.secret:PjLZkKBHEiLK3YsjtNrt3TGNG0ahs3kG}")
   protected String clientSecret;
 
 }

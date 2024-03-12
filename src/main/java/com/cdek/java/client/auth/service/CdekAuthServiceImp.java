@@ -18,9 +18,9 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class CdekAuthServiceImp implements CdekAuthService {
 
-  @Value("${client.id:z9GRRu7FxmO53CQ9cFfI6qiy32wpfTkd}")
+  @Value("${client.id:EMscd6r9JnFiQ3bLoyjJY6eM78JrJceI}")
   private String clientId;
-  @Value("${client.secret:w24JTCv4MnAcuRTx0oHjHLDtyt3I6IBq}")
+  @Value("${client.secret:PjLZkKBHEiLK3YsjtNrt3TGNG0ahs3kG}")
   private String clientSecret;
 
   private final WebClient webClient;
@@ -34,36 +34,36 @@ public class CdekAuthServiceImp implements CdekAuthService {
   @Override
   public Mono<AuthResponse> authorize(AuthRequest authRequest) {
     return webClient
-        .post()
-        .uri(uriBuilder ->
-            uriBuilder.path(authUrl)
-                .queryParam("grant_type", authRequest.getGrantType().name().toLowerCase())
-                .queryParam("client_id", authRequest.getClientId())
-                .queryParam("client_secret", authRequest.getClientSecret())
-                .build())
-        .retrieve()
-        .bodyToMono(AuthResponse.class);
+            .post()
+            .uri(uriBuilder ->
+                    uriBuilder.path(authUrl)
+                            .queryParam("grant_type", authRequest.getGrantType().name().toLowerCase())
+                            .queryParam("client_id", authRequest.getClientId())
+                            .queryParam("client_secret", authRequest.getClientSecret())
+                            .build())
+            .retrieve()
+            .bodyToMono(AuthResponse.class);
   }
 
-//  @Override
-//  public String getFreshJWT() {
-//    var auth = authorization.get(AUTHORIZATION_KEY);
-//    var doAuthRequest = false;
-//    if (auth == null) {
-//      doAuthRequest = true;
-//    } else {
-//      var now = Instant.now();
-//      var received = auth.getReceived();
-//      var expiresIn = auth.getExpiresIn();
-//      if (Duration.between(now, received).toSeconds() > expiresIn) {
-//        doAuthRequest = true;
-//      }
-//    }
-//    if (doAuthRequest) {
-//      authorize(new AuthRequest(clientId, clientSecret))
-//          .doOnNext(authResponse -> authorization.put(AUTHORIZATION_KEY, authResponse))
-//          .block();
-//    }
-//    return "Bearer " + authorization.get(AUTHORIZATION_KEY).getAccessToken();
-//  }
+  @Override
+  public String getFreshJWT() {
+    var auth = authorization.get(AUTHORIZATION_KEY);
+    var doAuthRequest = false;
+    if (auth == null) {
+      doAuthRequest = true;
+    } else {
+      var now = Instant.now();
+      var received = Instant.now();
+      var expiresIn = auth.getExpiresIn();
+      if (Duration.between(now, received).toSeconds() > expiresIn) {
+        doAuthRequest = true;
+      }
+    }
+    if (doAuthRequest) {
+      authorize(new AuthRequest(clientId, clientSecret))
+              .doOnNext(authResponse -> authorization.put(AUTHORIZATION_KEY, authResponse))
+              .block();
+    }
+    return "Bearer " + authorization.get(AUTHORIZATION_KEY).getAccessToken();
+  }
 }

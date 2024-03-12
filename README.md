@@ -3,7 +3,7 @@
 [![java version][2]][3] [![Spring Boot][4]][5]
 
 ## Официальная документация 
-Ссылка на официальную документацию к Cdek-API в [confluence](https://confluence.cdek.ru/pages/viewpage.action?pageId=29923741)
+Ссылка на официальную документацию к Cdek-API на [сайте](https://api-docs.cdek.ru/29923741.html)
 
 ## Поддерживаемая версия Cdek-API
 Данный SDK поддерживает протокол обмена данными Cdek версии 2.0 и выше.
@@ -65,7 +65,7 @@
 ```xml
 <dependencies>
     <dependency>
-        <groupId>com.github.mikheevshow</groupId>
+        <groupId>com.github.DreamCloudProject</groupId>
         <artifactId>cdek-java-sdk</artifactId>
     </dependency>
 </dependencies>

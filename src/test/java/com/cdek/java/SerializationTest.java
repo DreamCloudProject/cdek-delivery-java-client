@@ -45,14 +45,16 @@ public class SerializationTest extends AbstractCdekClientTest {
     Assert.assertEquals(expectedJson.trim(), actualJson);
   }
 
-//  @Test
-//  public void cityRequestSerializationTest() throws JsonProcessingException {
-//
-//
-//    var actualJson = objectMapper.writeValueAsString(cityRequest);
-//
-//    var expectedJson = "{\"country_codes\":[\"ru\"],\"region_code\":\"23\",\"size\":3}";
-//
-//    Assert.assertEquals(expectedJson.trim(), actualJson);
-//  }
+  @Test
+  public void cityRequestSerializationTest() throws JsonProcessingException {
+    var cityRequest = new CityRequest();
+    var countryCodes = Lists.list(Country.RUSSIA);
+    var actualJson = objectMapper.writeValueAsString(cityRequest);
+    cityRequest.setCountryCodes(countryCodes);
+    cityRequest.setRegionCode("23");
+    cityRequest.setSize(3);
+
+    var expectedJson = "{\"country_codes\":[\"ru\"],\"region_code\":\"23\",\"size\":3}";
+    Assert.assertEquals(expectedJson.trim(), actualJson);
+  }
 }

@@ -17,18 +17,8 @@ import com.cdek.java.model.order.response.OrderResponse;
 import com.cdek.java.model.region.request.RegionRequest;
 import com.cdek.java.model.region.response.Region;
 import com.cdek.java.service.validation.ValidationService;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublishers;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
-import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +26,21 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -259,8 +263,9 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
     if (regionRequest == null) {
       throw new CdekProxyException("Поле regionRequest не может быть null.");
     }
-    requireNonNullAccessToken(authentication);
     var url = baseUrl + regionListUrl;
+    requireNonNullAccessToken(authentication);
+
     return doGetRequestForList(url, regionRequest, Region.class, authentication);
   }
 
@@ -312,9 +317,22 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
       @Nullable Object requestEntity,
       Class<T> responseEntityClass,
       CdekAuthentication authentication) {
-
     try {
-      var response = doRequest(url, "GET", requestEntity, authentication);
+      Map<String,Object> params = objectMapper.convertValue(requestEntity, new TypeReference<>() {});
+      MultiValueMap<String,String> queryValueMap = new LinkedMultiValueMap<>();
+      params.forEach((key, value) -> {
+        Object val;
+        if(value instanceof List){
+          val = ((List<String>) value).stream().collect(Collectors.joining(","));
+        } else {
+          val = value;
+        }
+        queryValueMap.add(key, val.toString());
+      });
+      UriComponents queryParams = UriComponentsBuilder.newInstance()
+              .queryParams(queryValueMap).build();
+
+      var response = doRequest(url + queryParams, "GET", requestEntity, authentication);
       var responseBody = response.body();
       Objects.requireNonNull(responseBody);
       var listMapper = objectMapper
@@ -332,7 +350,6 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
       String method,
       @Nullable Object requestEntity,
       CdekAuthentication authentication) throws IOException, InterruptedException {
-
     var bodyPublisher = BodyPublishers.noBody();
     if (requestEntity != null) {
       var json = objectMapper.writeValueAsBytes(requestEntity);
@@ -343,7 +360,7 @@ public class CdekClientImp extends AbstractCdekClient implements CdekClient {
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .method(method, bodyPublisher);
     if (authentication != null && authentication.getAccessToken() != null) {
-      requestBuilder.header(HttpHeaders.AUTHORIZATION, authentication.getAccessToken());
+      requestBuilder.header(HttpHeaders.AUTHORIZATION, "bearer " + authentication.getAccessToken());
     }
     var request = requestBuilder.build();
     return httpClient.send(request, BodyHandlers.ofString());

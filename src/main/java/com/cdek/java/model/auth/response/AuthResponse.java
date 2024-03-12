@@ -34,5 +34,15 @@ public class AuthResponse implements CdekAuthentication {
   /**
    * Уникальный идентификатор токена
    */
-  private UUID jti;
+  private String jti;
+
+  /**
+   * Ошибка
+   */
+  private String error;
+
+  /**
+   * Сообщение об ошибке
+   */
+  private String errorDescription;
 }

@@ -1,92 +1,145 @@
-# Created by https://www.gitignore.io/api/intellij
-# Edit at https://www.gitignore.io/?templates=intellij
+######################
+# Project Specific
+######################
 
-### Intellij ###
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
-# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
-.idea
-# User-specific stuff
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/usage.statistics.xml
-.idea/**/dictionaries
-.idea/**/shelf
+######################
+# Node
+######################
+/node/
+node_tmp/
+node_modules/
+npm-debug.log.*
+/.awcache/*
+/.cache-loader/*
+package-lock.json
 
-# Generated files
-.idea/**/contentModel.xml
+######################
+# SASS
+######################
+.sass-cache/
 
-# Sensitive or high-churn files
-.idea/**/dataSources/
-.idea/**/dataSources.ids
-.idea/**/dataSources.local.xml
-.idea/**/sqlDataSources.xml
-.idea/**/dynamic.xml
-.idea/**/uiDesigner.xml
-.idea/**/dbnavigator.xml
+######################
+# Eclipse
+######################
+*.pydevproject
+.project
+.metadata
+tmp/
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+.factorypath
+/src/main/resources/rebel.xml
 
-# Gradle
-.idea/**/gradle.xml
-.idea/**/libraries
+# External tool builders
+.externalToolBuilders/**
 
-# Gradle and Maven with auto-import
-# When using Gradle or Maven with auto-import, you should exclude module files,
-# since they will be recreated, and may cause churn.  Uncomment if using
-# auto-import.
-# .idea/modules.xml
-# .idea/*.iml
-# .idea/modules
-# *.iml
-# *.ipr
+# Locally stored "Eclipse launch configurations"
+*.launch
 
-# CMake
-cmake-build-*/
+# CDT-specific
+.cproject
 
-# Mongo Explorer plugin
-.idea/**/mongoSettings.xml
+# PDT-specific
+.buildpath
 
-# File-based project format
+######################
+# Intellij
+######################
+.idea/
+*.iml
 *.iws
-
-# IntelliJ
+*.ipr
+*.ids
+*.orig
+classes/
 out/
 
-# mpeltonen/sbt-idea plugin
-.idea_modules/
+######################
+# Visual Studio Code
+######################
+.vscode/
 
-# JIRA plugin
-atlassian-ide-plugin.xml
+######################
+# Maven
+######################
+/log/
+/target/
 
-# Cursive Clojure plugin
-.idea/replstate.xml
+######################
+# Gradle
+######################
+.gradle/
+/build/
 
-# Crashlytics plugin (for Android Studio and IntelliJ)
-com_crashlytics_export_strings.xml
-crashlytics.properties
-crashlytics-build.properties
-fabric.properties
+######################
+# Package Files
+######################
+*.jar
+*.war
+*.ear
+*.db
 
-# Editor-based Rest Client
-.idea/httpRequests
+######################
+# Windows
+######################
+# Windows image file caches
+Thumbs.db
 
-# Android studio 3.1+ serialized cache file
-.idea/caches/build_file_checksums.ser
+# Folder config file
+Desktop.ini
 
-### Intellij Patch ###
-# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+######################
+# Mac OSX
+######################
+.DS_Store
+.svn
 
-*.iml
-modules.xml
-.idea/misc.xml
-*.ipr
+# Thumbnails
+._*
 
-# Sonarlint plugin
-.idea/**/sonarlint/
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
 
-# SonarQube Plugin
-.idea/**/sonarIssues.xml
+######################
+# Directories
+######################
+/bin/
+/deploy/
+/release-rpm/
+/release-deb/
+/release-archive/
+######################
+# Logs
+######################
+*.log*
 
-# Markdown Navigator plugin
-.idea/**/markdown-navigator.xml
-.idea/**/markdown-navigator/
+######################
+# Others
+######################
+*.class
+*.*~
+*~
+.merge_file*
 
-# End of https://www.gitignore.io/api/intellij
+######################
+# Gradle Wrapper
+######################
+!gradle/wrapper/gradle-wrapper.jar
+
+######################
+# Maven Wrapper
+######################
+!.mvn/wrapper/maven-wrapper.jar
+
+######################
+# ESLint
+######################
+.eslintcache

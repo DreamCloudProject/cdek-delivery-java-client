@@ -4,6 +4,7 @@ import com.cdek.java.client.CdekClient;
 import com.cdek.java.client.CdekClientImp;
 import com.cdek.java.client.reactive.ReactiveCdekClient;
 import com.cdek.java.model.auth.request.AuthRequest;
+import com.cdek.java.model.auth.request.GrantType;
 import com.cdek.java.model.city.request.CityRequest;
 import com.cdek.java.model.handbook.Country;
 import com.cdek.java.model.region.request.RegionRequest;
@@ -36,6 +37,7 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
     var authRequest = new AuthRequest();
     authRequest.setClientId(clientId);
     authRequest.setClientSecret(clientSecret);
+    authRequest.setGrantType(GrantType.CLIENT_CREDENTIALS);
 
     var authResponse = cdekClient.authenticate(authRequest);
 
@@ -61,6 +63,7 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
     var authRequest = new AuthRequest();
     authRequest.setClientId(clientId);
     authRequest.setClientSecret(clientSecret);
+    authRequest.setGrantType(GrantType.CLIENT_CREDENTIALS);
 
     var authResponse = cdekClient.authenticate(authRequest);
 

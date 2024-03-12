@@ -25,6 +25,11 @@ public class City {
   private String city;
 
   /**
+   * Идентификатор города в ИС СДЭК
+   */
+  private UUID cityUuid;
+
+  /**
    * Уникальный идентификатор ФИАС населенного пункта
    */
   private UUID fiasGuid;
