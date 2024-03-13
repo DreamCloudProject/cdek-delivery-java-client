@@ -1,7 +1,7 @@
 package com.cdek.java;
 
 import com.cdek.java.client.CdekClient;
-import com.cdek.java.client.CdekClientImp;
+import com.cdek.java.client.CdekClientImpl;
 import com.cdek.java.client.reactive.ReactiveCdekClient;
 import com.cdek.java.model.auth.request.AuthRequest;
 import com.cdek.java.model.auth.request.GrantType;
@@ -25,7 +25,7 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
 
   @PostConstruct
   public void init() {
-    ((CdekClientImp) cdekClient).setBaseUrl("https://api.edu.cdek.ru");
+    ((CdekClientImpl) cdekClient).setBaseUrl("https://api.edu.cdek.ru");
   }
 
 

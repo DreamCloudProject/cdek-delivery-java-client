@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CdekClientImp extends AbstractCdekClient implements CdekClient {
+public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
 
   @Value("${cdek.base.url}")
   private String baseUrl;

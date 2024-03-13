@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CdekAuthServiceImp implements CdekAuthService {
+public class CdekAuthServiceImpl implements CdekAuthService {
 
   @Value("${client.id:EMscd6r9JnFiQ3bLoyjJY6eM78JrJceI}")
   private String clientId;

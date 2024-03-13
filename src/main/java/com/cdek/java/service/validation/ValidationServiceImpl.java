@@ -8,7 +8,7 @@ import com.cdek.java.model.order.request.OrderRequest;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ValidationServiceImp implements ValidationService {
+public class ValidationServiceImpl implements ValidationService {
 
   @Override
   public void validateOrderRequest(OrderRequest orderRequest) {

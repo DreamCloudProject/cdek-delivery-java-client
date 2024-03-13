@@ -27,7 +27,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ReactiveCdekClientImp extends AbstractCdekClient implements ReactiveCdekClient {
+public class ReactiveCdekClientImpl extends AbstractCdekClient implements ReactiveCdekClient {
 
   private final ValidationService validationService;
   private final CdekAuthService cdekAuthService;
