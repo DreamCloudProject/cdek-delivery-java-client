@@ -13,7 +13,10 @@ import lombok.Setter;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Service {
 
-  private Integer code;
-  private Integer parameter;
-
+  private String code;
+  private Float sum;
+  private String parameter;
+  private Float totalSum;
+  private Integer discountPercent;
+  private Float discountSum;
 }

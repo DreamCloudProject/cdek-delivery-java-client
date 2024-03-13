@@ -5,6 +5,9 @@ import com.cdek.java.model.auth.request.AuthRequest;
 import com.cdek.java.model.auth.response.AuthResponse;
 import com.cdek.java.model.barcode.request.BarcodeRequest;
 import com.cdek.java.model.barcode.response.BarcodeResponse;
+import com.cdek.java.model.calculator.request.CalculatorRequest;
+import com.cdek.java.model.calculator.response.Calculator;
+import com.cdek.java.model.calculator.response.Tariffs;
 import com.cdek.java.model.city.request.CityRequest;
 import com.cdek.java.model.city.response.City;
 import com.cdek.java.model.courier.request.CourierRequest;
@@ -38,6 +41,13 @@ public interface CdekClient {
    * @return объект с информацией по заказу
    */
   OrderResponse getOrderInfo(UUID uuid, CdekAuthentication authentication);
+
+  /**
+   * Запрос на получение информации о сумме доставки
+   * @param calcRequest - объект содержащий информацию о габаритах, адресе доставки и весе заказа
+   * @return объект с информацией по рассчитанной сумме доставки
+   */
+  Calculator calculateDelivery(CalculatorRequest calcRequest, CdekAuthentication authentication);
 
   /**
    * Запрос на удаление заказа
@@ -125,5 +135,13 @@ public interface CdekClient {
    * @param cityRequest - объект содержащий информацию о запрашиваемых населенных пунктах.
    */
   List<City> getCitiesList(CityRequest cityRequest, CdekAuthentication authentication);
+
+  /**
+   * Список тарифов для расчета суммы доставки.
+   * Метод предназначен для получения детальной информации о тарифах.
+   * Список тарифов может быть ограничен характеристиками, задаваемыми пользователем.
+   * @param calcRequest - объект содержащий информацию о запрашиваемых тарифах.
+   */
+  Tariffs getTariffsList(CalculatorRequest calcRequest, CdekAuthentication authentication);
 
 }

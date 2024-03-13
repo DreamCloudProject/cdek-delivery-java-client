@@ -22,7 +22,7 @@ public class Package {
   private String number;
 
   @NotNull
-  private Integer weigth;
+  private Integer weight;
   private Integer length;
   private Integer width;
   private Integer height;

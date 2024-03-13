@@ -6,6 +6,9 @@ import com.cdek.java.model.auth.request.AuthRequest;
 import com.cdek.java.model.auth.response.AuthResponse;
 import com.cdek.java.model.barcode.request.BarcodeRequest;
 import com.cdek.java.model.barcode.response.BarcodeResponse;
+import com.cdek.java.model.calculator.request.CalculatorRequest;
+import com.cdek.java.model.calculator.response.Calculator;
+import com.cdek.java.model.calculator.response.Tariffs;
 import com.cdek.java.model.city.request.CityRequest;
 import com.cdek.java.model.city.response.City;
 import com.cdek.java.model.courier.request.CourierRequest;
@@ -116,6 +119,20 @@ public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
     var url = baseUrl + ordersUrl + "/" + uuid;
 
     return doRequestForObject(url, "GET", null, OrderResponse.class, authentication);
+  }
+
+  @Override
+  public Calculator calculateDelivery(
+          @NotNull CalculatorRequest calcRequest,
+          @NotNull CdekAuthentication authentication) {
+    if (calcRequest == null) {
+      throw new CdekProxyException("Поле calcRequest не может быть null");
+    }
+    requireNonNullAccessToken(authentication);
+    validationService.validateCalculatorRequest(calcRequest);
+    var url = baseUrl + calculatorUrl;
+
+    return doRequestForObject(url, "POST", calcRequest, Calculator.class, authentication);
   }
 
   /**
@@ -285,6 +302,20 @@ public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
     requireNonNullAccessToken(authentication);
     var url = baseUrl + citiesListUrl;
     return doGetRequestForList(url, cityRequest, City.class, authentication);
+  }
+
+  @Override
+  public Tariffs getTariffsList(
+          @NotNull CalculatorRequest calcRequest,
+          @NotNull CdekAuthentication authentication) {
+    if (calcRequest == null) {
+      throw new CdekProxyException("Поле calcRequest не может быть null");
+    }
+    requireNonNullAccessToken(authentication);
+    validationService.validateCalculatorRequest(calcRequest);
+    var url = baseUrl + tariffsUrl;
+
+    return doRequestForObject(url, "POST", calcRequest, Tariffs.class, authentication);
   }
 
   private void requireNonNullAccessToken(CdekAuthentication authentication) {
