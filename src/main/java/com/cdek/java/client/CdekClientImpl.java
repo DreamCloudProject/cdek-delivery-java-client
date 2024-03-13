@@ -19,8 +19,9 @@ import com.cdek.java.model.region.response.Region;
 import com.cdek.java.service.validation.ValidationService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -39,25 +40,26 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
 
+  @Autowired
+  private ValidationService validationService;
+
+  private final HttpClient httpClient = HttpClient.newHttpClient();
+
+  private final ObjectMapper objectMapper = new ObjectMapper();
+
+  @Setter
   @Value("${cdek.base.url}")
   private String baseUrl;
-
-  public void setBaseUrl(String baseUrl) {
-    this.baseUrl = baseUrl;
-  }
-
-  private final ValidationService validationService;
-  private final HttpClient httpClient;
-  private final ObjectMapper objectMapper;
-
 
   /**
    * {@inheritDoc}

@@ -8,13 +8,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.util.Lists;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @SuppressWarnings("all")
 public class SerializationTest extends AbstractCdekClientTest {
 
-  @Autowired
-  private ObjectMapper objectMapper;
+  private ObjectMapper objectMapper = new ObjectMapper();
 
   @Test
   public void orderRequestSerializationTest() {

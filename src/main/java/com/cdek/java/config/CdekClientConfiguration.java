@@ -1,7 +1,5 @@
 package com.cdek.java.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.net.http.HttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -25,13 +23,4 @@ public class CdekClientConfiguration {
         .build();
   }
 
-  @Bean
-  public HttpClient httpClient() {
-    return HttpClient.newHttpClient();
-  }
-
-  @Bean
-  public ObjectMapper objectMapper() {
-    return new ObjectMapper();
-  }
 }
