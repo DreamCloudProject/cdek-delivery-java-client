@@ -318,6 +318,19 @@ public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
     return doRequestForObject(url, "POST", calcRequest, Tariffs.class, authentication);
   }
 
+  @Override
+  public Integer getTariffCode(Integer weight) {
+    if(weight > 0 && weight <= 30){
+      return 139;
+    } else if(weight > 30 && weight <= 50){
+      return 231;
+    } else if(weight > 50 && weight <= 500){
+      return 293;
+    } else {
+      return 293;
+    }
+  }
+
   private void requireNonNullAccessToken(CdekAuthentication authentication) {
     if (authentication == null) {
       throw new CdekProxyException("Поле authentication не может быть null.");

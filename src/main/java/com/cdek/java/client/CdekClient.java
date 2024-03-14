@@ -144,4 +144,11 @@ public interface CdekClient {
    */
   Tariffs getTariffsList(CalculatorRequest calcRequest, CdekAuthentication authentication);
 
+  /**
+   * Метод возвращает код тарифа в зависимости от веса груза.
+   * @param weight вес груза
+   * @return код тарифа
+   */
+  Integer getTariffCode(Integer weight);
+
 }
