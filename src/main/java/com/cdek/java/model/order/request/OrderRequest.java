@@ -6,7 +6,7 @@ import com.cdek.java.model.common.OrderType;
 import com.cdek.java.model.common.Contact;
 import com.cdek.java.model.common.Location;
 import com.cdek.java.model.common.Money;
-import com.cdek.java.model.common.Service;
+import com.cdek.java.model.common.ParcelService;
 import com.cdek.java.model.common.Threshold;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -62,7 +62,7 @@ public class OrderRequest {
   private Contact recipient;
   private Location fromLocation;
   private Location toLocaton;
-  private List<Service> services;
+  private List<ParcelService> services;
   private List<Package> packages;
 
 }

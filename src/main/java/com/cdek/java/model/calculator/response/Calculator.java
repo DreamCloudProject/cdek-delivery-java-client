@@ -1,6 +1,6 @@
 package com.cdek.java.model.calculator.response;
 
-import com.cdek.java.model.common.Service;
+import com.cdek.java.model.common.ParcelService;
 import com.cdek.java.model.common.response.Error;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -23,7 +23,7 @@ public class Calculator {
 
     private Integer weightCalc;
 
-    private List<Service> services;
+    private List<ParcelService> services;
 
     private Float totalSum;
 

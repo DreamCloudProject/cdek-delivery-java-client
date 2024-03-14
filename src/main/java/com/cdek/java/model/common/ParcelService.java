@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class Service {
+public class ParcelService {
 
   private String code;
   private Float sum;

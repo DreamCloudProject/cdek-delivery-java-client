@@ -9,7 +9,7 @@ import com.cdek.java.model.calculator.request.CalculatorRequest;
 import com.cdek.java.model.calculator.response.Calculator;
 import com.cdek.java.model.city.request.CityRequest;
 import com.cdek.java.model.common.Location;
-import com.cdek.java.model.common.Service;
+import com.cdek.java.model.common.ParcelService;
 import com.cdek.java.model.handbook.Country;
 import com.cdek.java.model.order.request.Package;
 import com.cdek.java.model.region.request.RegionRequest;
@@ -19,7 +19,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.*;
 
@@ -116,11 +115,11 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
     List<Package> packages = new ArrayList<>();
     packages.add(parcel);
 
-    var service = new Service();
+    var service = new ParcelService();
     service.setCode("INSURANCE");
     service.setParameter("100");
 
-    List<Service> services = new ArrayList<>();
+    List<ParcelService> services = new ArrayList<>();
     services.add(service);
 
     var calcRequest = new CalculatorRequest();
@@ -166,11 +165,11 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
     List<Package> packages = new ArrayList<>();
     packages.add(parcel);
 
-    var service = new Service();
+    var service = new ParcelService();
     service.setCode("INSURANCE");
     service.setParameter("100");
 
-    List<Service> services = new ArrayList<>();
+    List<ParcelService> services = new ArrayList<>();
     services.add(service);
 
     var calcRequest = new CalculatorRequest();

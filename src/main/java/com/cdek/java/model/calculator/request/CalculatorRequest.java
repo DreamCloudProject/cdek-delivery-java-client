@@ -1,7 +1,7 @@
 package com.cdek.java.model.calculator.request;
 
 import com.cdek.java.model.common.Location;
-import com.cdek.java.model.common.Service;
+import com.cdek.java.model.common.ParcelService;
 import com.cdek.java.model.order.request.Package;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -30,7 +30,7 @@ public class CalculatorRequest {
 
     private Location toLocation;
 
-    private List<Service> services;
+    private List<ParcelService> services;
 
     private List<Package> packages;
 
