@@ -143,9 +143,10 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
 
   @Test
   public void getTariffListSyncTest() {
+    ((CdekClientImpl) cdekClient).setBaseUrl("https://api.cdek.ru");
     var authRequest = new AuthRequest();
-    authRequest.setClientId(clientId);
-    authRequest.setClientSecret(clientSecret);
+    authRequest.setClientId("478Ju6OXLJUoJzLnfmHsQ3oIZj5yh5Oe");
+    authRequest.setClientSecret("iJ7H5RHuPKG06zGFhvBOkYepobHwz0IW");
     authRequest.setGrantType(GrantType.CLIENT_CREDENTIALS);
 
     var authResponse = cdekClient.authenticate(authRequest);
@@ -174,7 +175,6 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
 
     var calcRequest = new CalculatorRequest();
     calcRequest.setDate(Date.from(Instant.now()));
-    calcRequest.setTariffCode(139);
     calcRequest.setFromLocation(from);
     calcRequest.setToLocation(to);
     calcRequest.setServices(services);

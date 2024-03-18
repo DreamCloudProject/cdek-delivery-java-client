@@ -53,9 +53,6 @@ import java.util.stream.Collectors;
 @Service
 public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
 
-  @Autowired
-  private ValidationService validationService;
-
   private final HttpClient httpClient = HttpClient.newHttpClient();
 
   private final ObjectMapper objectMapper = new ObjectMapper();
@@ -98,7 +95,6 @@ public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
       throw new CdekProxyException("Поле orderRequest не может быть null.");
     }
     requireNonNullAccessToken(authentication);
-    validationService.validateOrderRequest(orderRequest);
     var url = baseUrl + ordersUrl;
 
     return doRequestForObject(url, "POST", orderRequest, OrderResponse.class, authentication);
@@ -129,7 +125,6 @@ public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
       throw new CdekProxyException("Поле calcRequest не может быть null");
     }
     requireNonNullAccessToken(authentication);
-    validationService.validateCalculatorRequest(calcRequest);
     var url = baseUrl + calculatorUrl;
 
     return doRequestForObject(url, "POST", calcRequest, Calculator.class, authentication);
@@ -164,7 +159,6 @@ public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
       throw new CdekProxyException("Поле courierRequest не может быть null");
     }
     requireNonNullAccessToken(authentication);
-    validationService.validateCourierRequest(courierRequest);
     var url = baseUrl + courierUrl;
 
     return doRequestForObject(url, "POST", courierRequest, CourierResponse.class, authentication);
@@ -216,7 +210,6 @@ public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
       throw new CdekProxyException("Поле по invoiceRequest не может быть null");
     }
     requireNonNullAccessToken(authentication);
-    validationService.validateInvoiceRequest(invoiceRequest);
     var url = baseUrl + invoiceUrl;
 
     return doRequestForObject(url, "POST", invoiceRequest, InvoiceResponse.class, authentication);
@@ -250,7 +243,6 @@ public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
       throw new CdekProxyException("Поле barcodeRequest не может null.");
     }
     requireNonNullAccessToken(authentication);
-    validationService.validateBarcodeRequest(barcodeRequest);
     var url = baseUrl + barcodeUrl;
     return doRequestForObject(url, "POST", barcodeRequest, BarcodeResponse.class, authentication);
   }
@@ -312,7 +304,6 @@ public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
       throw new CdekProxyException("Поле calcRequest не может быть null");
     }
     requireNonNullAccessToken(authentication);
-    validationService.validateCalculatorRequest(calcRequest);
     var url = baseUrl + tariffsUrl;
 
     return doRequestForObject(url, "POST", calcRequest, Tariffs.class, authentication);
