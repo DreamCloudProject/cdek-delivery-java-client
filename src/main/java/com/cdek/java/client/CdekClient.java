@@ -9,9 +9,11 @@ import com.cdek.java.model.calculator.request.CalculatorRequest;
 import com.cdek.java.model.calculator.response.Calculator;
 import com.cdek.java.model.calculator.response.Tariffs;
 import com.cdek.java.model.city.request.CityRequest;
-import com.cdek.java.model.city.response.City;
+import com.cdek.java.model.city.response.CityResponse;
 import com.cdek.java.model.courier.request.CourierRequest;
 import com.cdek.java.model.courier.response.CourierResponse;
+import com.cdek.java.model.deliverypoint.request.DeliveryPointRequest;
+import com.cdek.java.model.deliverypoint.response.DeliveryPointResponse;
 import com.cdek.java.model.invoice.request.InvoiceRequest;
 import com.cdek.java.model.invoice.response.InvoiceResponse;
 import com.cdek.java.model.order.request.OrderRequest;
@@ -134,7 +136,16 @@ public interface CdekClient {
    * Список населенных пунктов может быть ограничен характеристиками, задаваемыми пользователем.
    * @param cityRequest - объект содержащий информацию о запрашиваемых населенных пунктах.
    */
-  List<City> getCitiesList(CityRequest cityRequest, CdekAuthentication authentication);
+  List<CityResponse> getCitiesList(CityRequest cityRequest, CdekAuthentication authentication);
+
+  /**
+   * Список точек доставки по заданным параметрам.
+   *
+   * @param deliveryPointRequest объект с параметрами запроса точек доставки
+   * @param authentication объект для аутентификации в сервисе
+   * @return список объектов DeliveryPointResponse, содержащих информацию о точках доставки
+   */
+  List<DeliveryPointResponse> getDeliveryPointsList(DeliveryPointRequest deliveryPointRequest, CdekAuthentication authentication);
 
   /**
    * Список тарифов для расчета суммы доставки.

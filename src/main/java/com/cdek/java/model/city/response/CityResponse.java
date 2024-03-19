@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 @JsonInclude(Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class City {
+public class CityResponse {
 
   /**
    * Код населенного пункта СДЭК

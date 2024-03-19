@@ -20,11 +20,14 @@ public class Location {
   private String postalCode;
   private BigDecimal longitude;
   private BigDecimal latitude;
+  private String regionCode;
   private String countryCode;
   private String region;
   private String subRegion;
   private String city;
+  private String cityCode;
   private String kladrCode;
   private String address;
+  private String addressFull;
 
 }

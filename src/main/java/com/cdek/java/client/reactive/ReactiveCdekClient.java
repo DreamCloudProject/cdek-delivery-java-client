@@ -3,7 +3,7 @@ package com.cdek.java.client.reactive;
 import com.cdek.java.model.barcode.request.BarcodeRequest;
 import com.cdek.java.model.barcode.response.BarcodeResponse;
 import com.cdek.java.model.city.request.CityRequest;
-import com.cdek.java.model.city.response.City;
+import com.cdek.java.model.city.response.CityResponse;
 import com.cdek.java.model.courier.request.CourierRequest;
 import com.cdek.java.model.courier.response.CourierResponse;
 import com.cdek.java.model.invoice.request.InvoiceRequest;
@@ -71,6 +71,6 @@ public interface ReactiveCdekClient {
    * Список населенных пунктов может быть ограничен характеристиками, задаваемыми пользователем.
    * @param cityRequest - объект содержащий информацию о запрашиваемых населенных пунктах.
    */
-  Flux<City> getCitiesList(CityRequest cityRequest);
+  Flux<CityResponse> getCitiesList(CityRequest cityRequest);
 
 }

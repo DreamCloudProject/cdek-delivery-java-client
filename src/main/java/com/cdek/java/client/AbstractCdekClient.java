@@ -15,5 +15,6 @@ public abstract class AbstractCdekClient {
   protected static final String webhooksUrl = versionedUrl + "/webhooks";
   protected static final String regionListUrl = versionedUrl + "/location/regions";
   protected static final String citiesListUrl = versionedUrl + "/location/cities";
+  protected static final String deliveryPointsUrl = versionedUrl + "/deliverypoints";
 
 }

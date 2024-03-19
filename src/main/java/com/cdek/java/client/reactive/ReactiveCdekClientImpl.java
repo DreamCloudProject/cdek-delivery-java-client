@@ -5,7 +5,7 @@ import com.cdek.java.client.auth.service.CdekAuthService;
 import com.cdek.java.model.barcode.request.BarcodeRequest;
 import com.cdek.java.model.barcode.response.BarcodeResponse;
 import com.cdek.java.model.city.request.CityRequest;
-import com.cdek.java.model.city.response.City;
+import com.cdek.java.model.city.response.CityResponse;
 import com.cdek.java.model.courier.request.CourierRequest;
 import com.cdek.java.model.courier.response.CourierResponse;
 import com.cdek.java.model.invoice.request.InvoiceRequest;
@@ -145,7 +145,7 @@ public class ReactiveCdekClientImpl extends AbstractCdekClient implements Reacti
    * {@inheritDoc}
    */
   @Override
-  public Flux<City> getCitiesList(CityRequest cityRequest) {
+  public Flux<CityResponse> getCitiesList(CityRequest cityRequest) {
     return null;
   }
 }

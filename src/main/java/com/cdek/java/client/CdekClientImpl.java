@@ -10,21 +10,21 @@ import com.cdek.java.model.calculator.request.CalculatorRequest;
 import com.cdek.java.model.calculator.response.Calculator;
 import com.cdek.java.model.calculator.response.Tariffs;
 import com.cdek.java.model.city.request.CityRequest;
-import com.cdek.java.model.city.response.City;
+import com.cdek.java.model.city.response.CityResponse;
 import com.cdek.java.model.courier.request.CourierRequest;
 import com.cdek.java.model.courier.response.CourierResponse;
+import com.cdek.java.model.deliverypoint.request.DeliveryPointRequest;
+import com.cdek.java.model.deliverypoint.response.DeliveryPointResponse;
 import com.cdek.java.model.invoice.request.InvoiceRequest;
 import com.cdek.java.model.invoice.response.InvoiceResponse;
 import com.cdek.java.model.order.request.OrderRequest;
 import com.cdek.java.model.order.response.OrderResponse;
 import com.cdek.java.model.region.request.RegionRequest;
 import com.cdek.java.model.region.response.Region;
-import com.cdek.java.service.validation.ValidationService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -284,7 +284,7 @@ public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
    * {@inheritDoc}
    */
   @Override
-  public List<City> getCitiesList(
+  public List<CityResponse> getCitiesList(
       @NotNull CityRequest cityRequest,
       @NotNull CdekAuthentication authentication) {
 
@@ -293,7 +293,17 @@ public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
     }
     requireNonNullAccessToken(authentication);
     var url = baseUrl + citiesListUrl;
-    return doGetRequestForList(url, cityRequest, City.class, authentication);
+    return doGetRequestForList(url, cityRequest, CityResponse.class, authentication);
+  }
+
+  @Override
+  public List<DeliveryPointResponse> getDeliveryPointsList(DeliveryPointRequest deliveryPointRequest, CdekAuthentication authentication) {
+    if (deliveryPointRequest == null) {
+      throw new CdekProxyException("Поле deliveryPointRequest не может быть null.");
+    }
+    requireNonNullAccessToken(authentication);
+    var url = baseUrl + deliveryPointsUrl;
+    return doGetRequestForList(url, deliveryPointRequest, DeliveryPointResponse.class, authentication);
   }
 
   @Override
