@@ -28,7 +28,7 @@ public class DeliveryPointRequest {
     @Size(max = 3)
     private String lang;
     private Boolean takeOnly;
-    private Boolean isHandOut;
+    private Boolean isHandout;
     private Boolean isReception;
     private UUID fiasGuid;
     @Size(max = 10)
