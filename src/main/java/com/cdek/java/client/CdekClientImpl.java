@@ -374,7 +374,9 @@ public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
         } else {
           val = value;
         }
-        queryValueMap.add(key, val.toString());
+        if(Objects.nonNull(val)){
+          queryValueMap.add(key, val.toString());
+        }
       });
       UriComponents queryParams = UriComponentsBuilder.newInstance()
               .queryParams(queryValueMap).build();

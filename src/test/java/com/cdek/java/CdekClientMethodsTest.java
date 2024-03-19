@@ -10,6 +10,7 @@ import com.cdek.java.model.calculator.response.Calculator;
 import com.cdek.java.model.city.request.CityRequest;
 import com.cdek.java.model.common.Location;
 import com.cdek.java.model.common.ParcelService;
+import com.cdek.java.model.deliverypoint.request.DeliveryPointRequest;
 import com.cdek.java.model.handbook.Country;
 import com.cdek.java.model.order.request.Package;
 import com.cdek.java.model.region.request.RegionRequest;
@@ -143,10 +144,9 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
 
   @Test
   public void getTariffListSyncTest() {
-    ((CdekClientImpl) cdekClient).setBaseUrl("https://api.cdek.ru");
     var authRequest = new AuthRequest();
-    authRequest.setClientId("478Ju6OXLJUoJzLnfmHsQ3oIZj5yh5Oe");
-    authRequest.setClientSecret("iJ7H5RHuPKG06zGFhvBOkYepobHwz0IW");
+    authRequest.setClientId(clientId);
+    authRequest.setClientSecret(clientSecret);
     authRequest.setGrantType(GrantType.CLIENT_CREDENTIALS);
 
     var authResponse = cdekClient.authenticate(authRequest);
@@ -191,16 +191,25 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
     }
   }
 
-  // Reactive client test
-
   @Test
-  public void getRegionListReactiveTest() {
+  public void getDeliveryPointsTest() {
+    var authRequest = new AuthRequest();
+    authRequest.setClientId(clientId);
+    authRequest.setClientSecret(clientSecret);
+    authRequest.setGrantType(GrantType.CLIENT_CREDENTIALS);
+
+    var authResponse = cdekClient.authenticate(authRequest);
+
+    var deliveryPointRequest = new DeliveryPointRequest();
+    deliveryPointRequest.setWeightMax(50);
+    deliveryPointRequest.setCityCode("270");
+    deliveryPointRequest.setAllowedCod(true);
+
+    var res = cdekClient.getDeliveryPointsList(deliveryPointRequest,authResponse);
+
+    Assert.assertTrue(res.size() > 0);
 
   }
 
-  @Test
-  public void getCitiesListReactiveTest() {
-
-  }
 
 }
