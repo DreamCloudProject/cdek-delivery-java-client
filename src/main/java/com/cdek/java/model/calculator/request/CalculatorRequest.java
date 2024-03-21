@@ -24,6 +24,8 @@ public class CalculatorRequest {
 
     private Integer currency;
 
+    private String lang;
+
     private Integer tariffCode;
 
     private Location fromLocation;
