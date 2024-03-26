@@ -20,6 +20,8 @@ public class DeliveryPointResponse {
 
     private String code;
     private String name;
+    private String cityCode;
+    private String city;
     private UUID uuid;
     private Location location;
     private String addressComment;
