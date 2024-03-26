@@ -1,21 +1,23 @@
 package com.cdek.java.model.courier.response;
 
-import com.cdek.java.model.common.response.Status;
-import com.cdek.java.model.courier.request.CourierRequest;
+import com.cdek.java.model.common.response.Entity;
 import com.cdek.java.model.common.response.Error;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.cdek.java.model.common.response.Request;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Getter
+@Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class CourierResponse extends CourierRequest {
+public class CourierResponse {
 
-  private List<Status> statuses;
-  private List<Error> errors;
+  private Entity entity;
+  private List<Request> requests;
+  private List<Error> warnings;
+  private List<Entity> relatedEntities;
 
 }

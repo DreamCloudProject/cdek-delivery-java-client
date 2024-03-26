@@ -1,23 +1,17 @@
 package com.cdek.java.model.order.request;
 
 import com.cdek.java.commons.Pattern;
-import com.cdek.java.model.handbook.OrderTariff;
-import com.cdek.java.model.common.OrderType;
-import com.cdek.java.model.common.Contact;
-import com.cdek.java.model.common.Location;
-import com.cdek.java.model.common.Money;
-import com.cdek.java.model.common.ParcelService;
-import com.cdek.java.model.common.Threshold;
+import com.cdek.java.model.common.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import java.time.Instant;
-import java.util.List;
-import java.util.UUID;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,10 +20,10 @@ public class OrderRequest {
 
   private OrderType type;
 
-  private UUID number;
+  private String number;
 
   @NotNull
-  private OrderTariff tariffCode;
+  private int tariffCode;
 
   @Size(max = 255, message = "Размер комментария к заказу не может быть больше 255 символов.")
   private String comment;
@@ -61,7 +55,7 @@ public class OrderRequest {
   private Seller seller;
   private Contact recipient;
   private Location fromLocation;
-  private Location toLocaton;
+  private Location toLocation;
   private List<ParcelService> services;
   private List<Package> packages;
 

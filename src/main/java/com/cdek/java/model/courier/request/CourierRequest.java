@@ -4,11 +4,11 @@ import com.cdek.java.model.common.Contact;
 import com.cdek.java.model.common.Location;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Date;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -16,16 +16,17 @@ import lombok.Setter;
 public class CourierRequest {
   private String cdekNumber;
   private UUID orderUuid;
-  private Instant intakeDate;
-  private Instant intakeTimeFrom;
-  private Instant intakeTimeTo;
-  private Instant lunchTimeFrom;
-  private Instant lunchTimeTo;
+  private String intakeDate;
+  private String intakeTimeFrom;
+  private String intakeTimeTo;
+  private String lunchTimeFrom;
+  private String lunchTimeTo;
   private String name;
   private Integer weight;
+  private Integer width;
   private Integer length;
   private Integer height;
-  private Integer comment;
+  private String comment;
   private Contact sender;
   private Location fromLocation;
   private boolean needCall;
