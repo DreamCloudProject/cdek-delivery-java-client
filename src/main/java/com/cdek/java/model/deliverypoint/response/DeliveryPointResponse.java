@@ -22,6 +22,7 @@ public class DeliveryPointResponse {
     private String name;
     private String cityCode;
     private String city;
+    private String address;
     private UUID uuid;
     private Location location;
     private String addressComment;
