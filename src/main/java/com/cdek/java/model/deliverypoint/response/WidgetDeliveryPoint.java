@@ -1,8 +1,6 @@
 package com.cdek.java.model.deliverypoint.response;
 
-import com.cdek.java.model.common.Cell;
-import com.cdek.java.model.common.Phone;
-import com.cdek.java.model.common.WorkTime;
+import com.cdek.java.model.common.*;
 import com.cdek.java.model.common.response.Error;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -31,6 +29,12 @@ public class WidgetDeliveryPoint {
     private String address;
     private String workTime;
     private List<Double> location;
+    private List<Double> position;
+    private Bounds bounds;
+    private String kind;
+    private String precision;
+    private String formatted;
+    private List<Component> components;
     private Float weightMax;
     private Float weightMin;
     private List<Cell> dimensions;
