@@ -12,6 +12,7 @@ import java.util.Date;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class OrderStatusWebhook {
     private String uuid;
+    private String identifier;
     private String type;
     private Date dateTime;
     private String url;
