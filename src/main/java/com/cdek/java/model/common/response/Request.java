@@ -19,5 +19,6 @@ public class Request {
     private Date dateTime;
     private String state;
     private List<Error> errors;
+    private List<Error> warnings;
 
 }

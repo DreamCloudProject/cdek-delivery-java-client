@@ -20,6 +20,10 @@ import com.cdek.java.model.order.request.OrderRequest;
 import com.cdek.java.model.order.response.OrderResponse;
 import com.cdek.java.model.region.request.RegionRequest;
 import com.cdek.java.model.region.response.Region;
+import com.cdek.java.model.webhook.request.WebhookRequest;
+import com.cdek.java.model.webhook.response.OrderStatusWebhook;
+import com.cdek.java.model.webhook.response.WebhookResponse;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -152,7 +156,7 @@ public interface CdekClient {
    * Метод предназначен для получения детальной информации о тарифах.
    * Список тарифов может быть ограничен характеристиками, задаваемыми пользователем.
    * @param calcRequest - объект содержащий информацию о запрашиваемых тарифах.
-   */
+   * @param authentication объект для аутентификации в сервисе   */
   Tariffs getTariffsList(CalculatorRequest calcRequest, CdekAuthentication authentication);
 
   /**
@@ -161,5 +165,40 @@ public interface CdekClient {
    * @return код тарифа
    */
   Integer getTariffCode(Integer weight);
+
+  /**
+   * Метод для создания вебхука на основе запроса.
+   *
+   * @param request объект запроса для создания вебхука
+   * @param authentication объект для аутентификации в сервисе
+   * @return объект ответа на запрос о создании вебхука
+   */
+  WebhookResponse createWebhook(WebhookRequest request, CdekAuthentication authentication);
+
+  /**
+   * Метод для получения информации о подписке
+   *
+   * @param uuid идентификатор подписки
+   * @param authentication объект для аутентификации в сервисе
+   * @return объект ответа на запрос об удалении вебхука
+   */
+  WebhookResponse getWebhookInfo(UUID uuid, CdekAuthentication authentication);
+
+  /**
+   * Метод для удаления вебхука
+   *
+   * @param uuid идентификатор подписки
+   * @param authentication объект для аутентификации в сервисе
+   * @return объект ответа на запрос об удалении вебхука
+   */
+  WebhookResponse deleteWebhook(UUID uuid, CdekAuthentication authentication);
+
+  /**
+   * Возвращает список вебхуков.
+   * @param request объект запроса
+   * @param authentication объект для аутентификации в сервисе
+   * @return список вебхуков
+   */
+  List<OrderStatusWebhook> getWebhookList(WebhookRequest request, CdekAuthentication authentication);
 
 }

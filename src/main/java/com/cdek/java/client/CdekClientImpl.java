@@ -21,6 +21,9 @@ import com.cdek.java.model.order.request.OrderRequest;
 import com.cdek.java.model.order.response.OrderResponse;
 import com.cdek.java.model.region.request.RegionRequest;
 import com.cdek.java.model.region.response.Region;
+import com.cdek.java.model.webhook.request.WebhookRequest;
+import com.cdek.java.model.webhook.response.OrderStatusWebhook;
+import com.cdek.java.model.webhook.response.WebhookResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Setter;
@@ -330,6 +333,54 @@ public class CdekClientImpl extends AbstractCdekClient implements CdekClient {
     } else {
       return 293;
     }
+  }
+
+  @Override
+  public WebhookResponse createWebhook(WebhookRequest request, CdekAuthentication authentication) {
+    if (request == null) {
+      throw new CdekProxyException("Поле request не может быть null.");
+    }
+    requireNonNullAccessToken(authentication);
+    var url = baseUrl + webhooksUrl;
+
+    return doRequestForObject(url, "POST", request, WebhookResponse.class, authentication);
+  }
+
+  @Override
+  public WebhookResponse getWebhookInfo(
+          @NotNull UUID uuid,
+          @NotNull CdekAuthentication authentication) {
+    if (uuid == null) {
+      throw new CdekProxyException("Поле uuid не может быть null.");
+    }
+    requireNonNullAccessToken(authentication);
+    var url = baseUrl + webhooksUrl + "/" + uuid;
+
+    return doRequestForObject(url, "GET", null, WebhookResponse.class, authentication);
+  }
+
+  @Override
+  public WebhookResponse deleteWebhook(
+          @NotNull UUID uuid,
+          @NotNull CdekAuthentication authentication) {
+    if (uuid == null) {
+      throw new CdekProxyException("Поле uuid не может быть null");
+    }
+    requireNonNullAccessToken(authentication);
+    var url = baseUrl + webhooksUrl + "/" + uuid;
+
+    return doRequestForObject(url, "DELETE", null, WebhookResponse.class, authentication);
+  }
+
+  @Override
+  public List<OrderStatusWebhook> getWebhookList(WebhookRequest webhookRequest, CdekAuthentication authentication) {
+    if (webhookRequest == null) {
+      throw new CdekProxyException("Поле webhookRequest не может быть null.");
+    }
+    var url = baseUrl + webhooksUrl;
+    requireNonNullAccessToken(authentication);
+
+    return doGetRequestForList(url, webhookRequest, OrderStatusWebhook.class, authentication);
   }
 
   private void requireNonNullAccessToken(CdekAuthentication authentication) {
