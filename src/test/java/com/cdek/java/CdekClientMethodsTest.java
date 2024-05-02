@@ -146,7 +146,7 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
     Float expected = 1100.75F;//it's working only with production keys
     if(Objects.nonNull(res.getErrors()) && res.getErrors().size() > 0) {
       //Test environment
-      Assert.assertEquals("v2_internal_error",res.getErrors().get(0).getCode());
+      Assert.assertEquals("ve_contract_with_id_not_exists",res.getErrors().get(0).getCode());
     } else {
       Assert.assertEquals(expected, res.getTotalSum());
     }
@@ -196,7 +196,7 @@ public class CdekClientMethodsTest extends AbstractCdekClientTest {
     int expected = 48;
     if(Objects.nonNull(res.getErrors()) && res.getErrors().size() > 0) {
       //Test environment
-      Assert.assertEquals("v2_internal_error",res.getErrors().get(0).getCode());
+      Assert.assertEquals("ve_contract_with_id_not_exists",res.getErrors().get(0).getCode());
     } else {
       Assert.assertEquals(expected, res.getTariffCodes().size());
     }
