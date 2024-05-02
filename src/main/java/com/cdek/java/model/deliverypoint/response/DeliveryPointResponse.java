@@ -51,6 +51,7 @@ public class DeliveryPointResponse {
     private List<OfficeImage> officeImageList;
     private List<WorkTime> workTimeList;
     private List<WorkTime> workTimeExceptions;
+    private List<WorkTime> workTimeExceptionList;
     private Float weightMax;
     private Float weightMin;
     private List<Cell> dimensions;
