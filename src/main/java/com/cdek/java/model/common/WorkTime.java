@@ -15,6 +15,7 @@ public class WorkTime {
     private Integer day;
     private String time;
     private Date date;
+    private Date dateStart;
     private Boolean isWorking;
 
 }
