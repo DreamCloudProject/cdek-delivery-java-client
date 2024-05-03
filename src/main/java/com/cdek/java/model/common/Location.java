@@ -24,6 +24,7 @@ public class Location {
   private String countryCode;
   private String region;
   private String subRegion;
+  private String cityUuid;
   private String city;
   private String cityCode;
   private String kladrCode;
