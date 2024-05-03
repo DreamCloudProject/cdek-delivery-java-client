@@ -14,6 +14,8 @@ public class WorkTime {
 
     private Integer day;
     private String time;
+    private String timeStart;
+    private String timeEnd;
     private Date date;
     private Date dateStart;
     private Date dateEnd;
